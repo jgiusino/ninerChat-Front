@@ -1,21 +1,48 @@
-import React from 'react';
-
-import { Component,View,StyleSheet } from 'react-native';
-import {NativeRouter,Switch,Route} from 'react-router-native';
+import React, { Component } from 'react';
+import { StyleSheet, View, Image, Text } from 'react-native';
 import Login from './src/Screens/login';
-import HomeScreen from './src/Screens/HomeScreen';
 import Chat from './src/Screens/chat';
+import HomeScreen from './src/Screens/HomeScreen';
+
+import {
+  createAppContainer,
+   createSwitchNavigator
+  } from 'react-navigation';
+
+import {
+  createStackNavigator
+} from 'react-navigation-stack';
+
+const AppStack =  createStackNavigator(
+  {
+    HomeRoute: HomeScreen,
+    ServerRoomRoute: Chat,
+  },
+  {
+    headerMode: 'Chat'
+    
+  }
+);
+
+const AuthStack = createStackNavigator(
+  {
+    LoginRoute: Login
+  },
+  {
+    headerMode: 'LoginRoute'
+    
+  }
+);
 
 
 
+export default createAppContainer(createSwitchNavigator(
+  {
+  
+    Auth: AuthStack,
+    App: AppStack,
 
 
-export default class App extends React.Component{
-  render(){
-  return(
-
-    <Chat />
-  );
-}
-}
+  }
+));
 

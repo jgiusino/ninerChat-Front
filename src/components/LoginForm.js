@@ -7,11 +7,15 @@ import {
     TouchableOpacity, 
     Text
 } from 'react-native';
+import {KeyboardAvoidingView} from 'react-native';
+
 
 
 
 
 export default class LoginForm extends Component{
+
+  
     state={
         email: '',
         password: '',
@@ -25,15 +29,18 @@ export default class LoginForm extends Component{
     }
     //submit form class for log in
     submitForm = () => {
+        
          Alert.alert('Error','Email is not a valid UNCC email.');
 
     }
  
 
-    render({history}){
+    render(){
+     
         return(
+            <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
             <View style={styles.container}>
-
+   
                 <TextInput                                              //Email input box
                 placeholder="Email: "
                 placeholderTextColor="rgba(255,255,255,0.6)"
@@ -59,10 +66,11 @@ export default class LoginForm extends Component{
                 <TouchableOpacity onPress={this.submitForm} style={styles.buttonLogin}>            
                     <Text style={styles.buttonText}>LOGIN</Text>
                 </TouchableOpacity> 
-                <TouchableOpacity onPress={() => history.push('/home')} style={styles.buttonSignup}>
+                <TouchableOpacity style={styles.buttonSignup}>
                     <Text style={styles.buttonText}>SIGNUP</Text>
                 </TouchableOpacity>
             </View>
+            </KeyboardAvoidingView>
         );
     }
 }

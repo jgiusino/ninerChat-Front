@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Image, Text } from 'react-native';
 import LoginForm from '../components/LoginForm';
+import {KeyboardAvoidingView} from 'react-native';
 
 
 export default class Login extends Component {
     render() {
         return (
+            <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
             <View style={styles.container}>
                 <View style={styles.logoContainer}>
                     <Image
@@ -21,6 +23,7 @@ export default class Login extends Component {
                 </View>
 
             </View>
+            </KeyboardAvoidingView>
         );
     }
 }
