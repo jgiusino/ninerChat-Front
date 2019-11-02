@@ -29,9 +29,11 @@ const leftButtonConfig = {
 const titleConfig = {
   title: 'Chat[some name]',
   tintColor: '#fff',
+  
 
  
 };
+
 
 
 export default class Chat extends Component {
@@ -71,6 +73,7 @@ export default class Chat extends Component {
           style={styles.navBar}
           title={titleConfig }
           leftButton={leftButtonConfig}
+          
         />
 
         <FlatList style={styles.list}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Image, Text } from 'react-native';
-import LoginForm from '../components/LoginForm';
+import SignUpForm from '../components/SignUpForm';
 import {KeyboardAvoidingView} from 'react-native';
 
 
@@ -19,7 +19,7 @@ export default class Login extends Component {
                     <Text style={styles.subTitle}>Connect | Learn | Grow</Text>
                 </View>
                 <View style={styles.formContainer}>
-                    <LoginForm navigation={this.props.navigation} />
+                    <SignUpForm navigation={this.props.navigation} />
                 </View>
 
             </View>

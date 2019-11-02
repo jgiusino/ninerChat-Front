@@ -3,10 +3,12 @@ import { StyleSheet, View, Image, Text } from 'react-native';
 import Login from './src/Screens/login';
 import Chat from './src/Screens/chat';
 import HomeScreen from './src/Screens/HomeScreen';
+import SignUp from './src/Screens/SignUp';
 
 import {
   createAppContainer,
-   createSwitchNavigator
+   createSwitchNavigator,
+   createDrawerNavigator
   } from 'react-navigation';
 
 import {
@@ -17,6 +19,7 @@ const AppStack =  createStackNavigator(
   {
     HomeRoute: HomeScreen,
     ServerRoomRoute: Chat,
+    SignUpRoute: SignUp
   },
   {
     headerMode: 'Chat'

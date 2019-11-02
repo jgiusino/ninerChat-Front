@@ -16,7 +16,7 @@ import {KeyboardAvoidingView} from 'react-native';
 
 
 
-export default class LoginForm extends Component{
+export default class SignUpForm extends Component{
 
    
 
@@ -32,7 +32,11 @@ export default class LoginForm extends Component{
         //get user data
     }
     //submit form class for log in
+    submitForm = () => {
+        
+         Alert.alert('Error','Email is not a valid UNCC email.');
 
+    }
  
 
     render(){
@@ -43,7 +47,7 @@ export default class LoginForm extends Component{
             <View style={styles.container}>
    
                 <TextInput                                              //Email input box
-                placeholder="Email: "
+                placeholder="Enter An Email: "
                 placeholderTextColor="rgba(255,255,255,0.6)"
                 returnKeyType="next"
                 keyboardType="email-address"
@@ -54,7 +58,17 @@ export default class LoginForm extends Component{
                 
                 />
                 <TextInput                                              //Password input box
-                placeholder= "Password: "
+                placeholder= "Create A Password: "
+                placeholderTextColor="rgba(255,255,255,0.6)"
+                returnKeyType="go"
+                secureTextEntry
+                style = {styles.input}
+                value={this.state.password}
+                onChangeText={this.handleChange('password')}
+
+                />
+                  <TextInput                                              //Password input box
+                placeholder= "Confirm Password: "
                 placeholderTextColor="rgba(255,255,255,0.6)"
                 returnKeyType="go"
                 secureTextEntry
@@ -64,11 +78,8 @@ export default class LoginForm extends Component{
 
                 />
 
-                <TouchableOpacity onPress={()=> this.props.navigation.navigate("ServerRoomRoute")} style={styles.buttonLogin}>            
-                    <Text style={styles.buttonText}>LOGIN</Text>
-                </TouchableOpacity> 
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('SignUpRoute')} style={styles.buttonSignup}>
-                    <Text style={styles.buttonText}>SIGNUP</Text>
+                <TouchableOpacity onPress={() => props.navigation.navigate('LoginRoute')} style={styles.buttonSignup}>
+                    <Text style={styles.buttonText}>Continue To Log In</Text>
                 </TouchableOpacity>
             </View>
             </KeyboardAvoidingView>
