@@ -11,19 +11,22 @@ import {
    createDrawerNavigator
   } from 'react-navigation';
 
-import {
+
+
+ import {
   createStackNavigator
 } from 'react-navigation-stack';
 
 const AppStack =  createStackNavigator(
   {
     HomeRoute: HomeScreen,
-    ServerRoomRoute: Chat,
+    //ServerRoomRoute: Chat,
+    ServerRoomRoute: HomeScreen,
     SignUpRoute: SignUp
   },
   {
     headerMode: 'Chat'
-    
+
   }
 );
 
@@ -33,7 +36,7 @@ const AuthStack = createStackNavigator(
   },
   {
     headerMode: 'LoginRoute'
-    
+
   }
 );
 
@@ -41,11 +44,10 @@ const AuthStack = createStackNavigator(
 
 export default createAppContainer(createSwitchNavigator(
   {
-  
+
     Auth: AuthStack,
     App: AppStack,
 
 
   }
 ));
-
