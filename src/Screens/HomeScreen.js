@@ -5,7 +5,9 @@ Text,
 StyleSheet,
 SectionList,
 TouchableOpacity,
-Image
+Image,
+Button,
+TouchEvent
 }from 'react-native'
 
 const DATA = [
@@ -20,7 +22,7 @@ const DATA = [
   ]
 
 
-  function Item({ title }) {
+  function ItemButton({ title }) {
   return (
     <View style={styles.itemBox}>
 
@@ -40,16 +42,21 @@ export default class HomeScreen extends React.Component{
           <View style={styles.container}>
 
           <Text style = {styles.header}> Locations </Text>
+         
           <SectionList
             sections={DATA}
             keyExtractor={(item, index) => item + index}
-            renderItem={({ item }) => <Item title={item}  />}
+            renderItem=
+            { 
+              ({ item }) => <ItemButton title={item} />
+
+            }
             renderSectionHeader={({ section: { title } }) => (
-            <Text style={styles.title}>{title} </Text>
+            <Text style={styles.title}>{title}</Text>
 
             )}
           />
-
+         
           </View>
         )
     }}
