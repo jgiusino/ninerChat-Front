@@ -22,6 +22,10 @@ export default class App extends React.Component {
   }
 }
 const WIDTH = Dimensions.get("window").width;
+
+const DrawerConfig = {
+  drawerWidth: WIDTH * 0.83
+};
 const AppStack = createStackNavigator(
   {
     HomeRoute: HomeScreen,
@@ -48,7 +52,10 @@ const AppContainer = createAppContainer(
     App: AppStack
   }),
   createDrawerNavigator({
-    Home:HomeScreen
-    
-  })
+    Home: {
+      screen: HomeScreen
+    }
+  },
+  DrawerConfig
+  )
 );

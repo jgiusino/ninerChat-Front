@@ -10,7 +10,7 @@ export default class Hamburger extends React.Component{
                 color="#ffff"
                 size={32}
                 style={styles.burgerIcon}
-                onPress={() => {}}
+                onPress={() => this.props.navigation.toggleDrawer()}
             />
         );
     }

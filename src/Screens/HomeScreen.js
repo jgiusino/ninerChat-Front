@@ -36,7 +36,7 @@ export default class HomeScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Hamburger />
+        <Hamburger navigation = {this.props.navigation} />
 
         <SectionList
           sections={DATA}
