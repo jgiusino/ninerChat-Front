@@ -7,55 +7,102 @@ import {
   Platform,
   Dimensions
 } from "react-native";
-import Login from "./src/Screens/login";
-import Chat from "./src/Screens/chat";
-import HomeScreen from "./src/Screens/HomeScreen";
+import Login from "./src/Screens/Login";
+import Chat from "./src/Screens/Chat";
+import Home from "./src/Screens/Home";
 import SignUp from "./src/Screens/SignUp";
 
 import { createDrawerNavigator } from "react-navigation-drawer";
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
+import { createBottomTabNavigator} from 'react-navigation-tabs';
 
+
+// Get screen dimensions to adjust width
+// const WIDTH = Dimensions.get("window").width;
+// const DrawerConfig = {
+  //   drawerWidth: WIDTH * 0.83
+  // };
+  
+  /*
+  
+  */
+const MainTabs = createBottomTabNavigator(
+  // Routes
+  {
+    Home: {
+      screen: Home
+    },
+    Chat: {
+      screen: Chat
+    }
+  },
+  // Config
+  {
+    initialRouteName: "Home"
+  }
+);
+    
+const AuthStack = createStackNavigator(
+  // Routes
+  {
+    Login: {
+      screen: Login,
+      navigationOptions: {
+        header: null  // removes the header
+      }
+    },
+    SignUp: {
+      screen: SignUp,
+      navigationOptions: {
+        header: null  // removes the header
+      }
+    }
+  }
+  // Config
+);
+    
+const AppDrawer = createDrawerNavigator(
+  // Routes
+  {
+    Home: {
+      screen: MainTabs,
+    },
+    Login: {
+      screen: AuthStack
+    }
+  }
+  // Config
+);
+    
+const AppSwitch = createSwitchNavigator(
+  // Routes
+  {
+    Auth: {
+      screen: AuthStack,
+    },
+    App: {
+      screen: AppDrawer,
+    }
+  }
+  // Config
+);
+
+/*
+AppContainer is created by passing AppSwitch, which is a SwitchNavigator
+that contains the AuthStack for authorization (Login, SignUp) and
+AppDrawer which is used to switch between MainTabs and go back to Login.
+MainTabs has routes to Home and Chat screens.
+
+AppContainer -> AppSwitch [AuthStack,AppDrawer]
+AppDrawer -> [MainTabs, AuthStack]
+AuthStack -> [Login,SignUp]
+MainTabs -> [Home, Chat]
+*/
+const AppContainer = createAppContainer(AppSwitch);
+      
 export default class App extends React.Component {
   render() {
     return <AppContainer />;
   }
-}
-const WIDTH = Dimensions.get("window").width;
-
-const DrawerConfig = {
-  drawerWidth: WIDTH * 0.83
 };
-const AppStack = createStackNavigator(
-  {
-    HomeRoute: HomeScreen,
-    ServerRoomRoute: Chat,
-    SignUpRoute: SignUp
-  },
-  {
-    headerMode: "Chat"
-  }
-);
-
-const AuthStack = createStackNavigator(
-  {
-    LoginRoute: Login
-  },
-  {
-    headerMode: "LoginRoute"
-  }
-);
-
-const AppContainer = createAppContainer(
-  createSwitchNavigator({
-    Auth: AuthStack,
-    App: AppStack
-  }),
-  createDrawerNavigator({
-    Home: {
-      screen: HomeScreen
-    }
-  },
-  DrawerConfig
-  )
-);

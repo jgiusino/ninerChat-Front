@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
+import {DrawerActions} from 'react-navigation-drawer'
 
 export default class Hamburger extends React.Component{
     render(){
@@ -10,10 +11,14 @@ export default class Hamburger extends React.Component{
                 color="#ffff"
                 size={32}
                 style={styles.burgerIcon}
-                onPress={() => this.props.navigation.toggleDrawer()}
+                onPress={() => {
+                    this.props.navigation.dispatch(DrawerActions.toggleDrawer());
+                    console.log("Hamburger Pressed!")
+                }}
             />
         );
     }
+
 }
 
 const styles = StyleSheet.create({

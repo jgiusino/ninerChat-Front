@@ -65,7 +65,7 @@ export default class SignUpForm extends Component {
           />
 
           <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('LoginRoute')}
+            onPress={() => this.props.navigation.navigate('Login')}
             style={styles.buttonSignup}
           >
           

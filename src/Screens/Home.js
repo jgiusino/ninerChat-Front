@@ -32,7 +32,7 @@ function ItemButton({ title }) {
   );
 }
 
-export default class HomeScreen extends React.Component {
+export default class Home extends React.Component {
   render() {
     return (
       <View style={styles.container}>
