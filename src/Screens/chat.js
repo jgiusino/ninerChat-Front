@@ -12,18 +12,7 @@ import {
   Button
 } from "react-native";
 
-import NavigationBar from "react-native-navbar";
 import { KeyboardAvoidingView } from "react-native";
-
-const leftButtonConfig = {
-  title: "Back",
-  tintColor: "#ffff"
-};
-
-const titleConfig = {
-  title: "Chat[some name]",
-  tintColor: "#fff"
-};
 
 export default class Chat extends Component {
   constructor(props) {
@@ -54,12 +43,6 @@ export default class Chat extends Component {
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
         <View style={styles.container}>
-          <NavigationBar
-            style={styles.navBar}
-            title={titleConfig}
-            leftButton={leftButtonConfig}
-          />
-
           <FlatList
             style={styles.list}
             data={this.state.data}
@@ -111,9 +94,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#1A1A1B"
-  },
-  navBar: {
-    backgroundColor: "#21B452"
   },
   messages: {
     color: "#fff"

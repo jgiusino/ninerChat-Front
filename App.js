@@ -7,8 +7,8 @@ import {
   Platform,
   Dimensions
 } from "react-native";
-import Login from "./src/Screens/Login";
-import Chat from "./src/Screens/Chat";
+import Login from "./src/Screens/login";
+import Chat from "./src/Screens/chat";
 import Home from "./src/Screens/Home";
 import SignUp from "./src/Screens/SignUp";
 
@@ -27,21 +27,7 @@ import { createBottomTabNavigator} from 'react-navigation-tabs';
   /*
   
   */
-const MainTabs = createBottomTabNavigator(
-  // Routes
-  {
-    Home: {
-      screen: Home
-    },
-    Chat: {
-      screen: Chat
-    }
-  },
-  // Config
-  {
-    initialRouteName: "Home"
-  }
-);
+
     
 const AuthStack = createStackNavigator(
   // Routes
@@ -66,7 +52,7 @@ const AppDrawer = createDrawerNavigator(
   // Routes
   {
     Home: {
-      screen: MainTabs,
+      screen: Home,
     },
     Login: {
       screen: AuthStack
@@ -93,7 +79,6 @@ AppContainer is created by passing AppSwitch, which is a SwitchNavigator
 that contains the AuthStack for authorization (Login, SignUp) and
 AppDrawer which is used to switch between MainTabs and go back to Login.
 MainTabs has routes to Home and Chat screens.
-
 AppContainer -> AppSwitch [AuthStack,AppDrawer]
 AppDrawer -> [MainTabs, AuthStack]
 AuthStack -> [Login,SignUp]
