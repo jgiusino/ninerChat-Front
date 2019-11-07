@@ -9,20 +9,45 @@ import {
   Button
 } from "react-native";
 import { KeyboardAvoidingView } from "react-native";
+import Axios from "axios";
 
 export default class LoginForm extends Component {
-  state = {
-    email: "",
-    password: ""
-  };
+  constructor() {
+    super();
+    this.state = {
+      email: "",
+      password: ""
+    };
+  }
   //handles state change key val pair
   handleChange = key => val => {
     this.setState({ [key]: val });
   };
+
   componentWillMount() {
     //get user data
   }
   //submit form class for log in
+  submit() {
+    let collection = {};
+    (collection.email = this.state.email),
+      (collection.password = this.state.password),
+      console.log(collection);
+
+    Axios({
+      method: "POST",
+      url: "https://127.0.0.1:5000/api/login",
+      data: {
+        email: collection.email,
+        password: collection.password
+      }
+    }).then(function(response){
+      console.log(response);
+    }).catch(function(error){
+      console.log(error);
+    })
+    this.props.navigation.navigate('Home');
+  }
 
   render() {
     return (
@@ -48,7 +73,7 @@ export default class LoginForm extends Component {
           />
 
           <TouchableOpacity
-            onPress={() => this.props.navigation.navigate("Home")}
+            onPress={() => this.submit()}
             style={styles.buttonLogin}
           >
             <Text style={styles.buttonText}>LOGIN</Text>

@@ -8,34 +8,73 @@ import {
   Text,
   Button
 } from "react-native";
+import axios from "axios";
 import { KeyboardAvoidingView } from "react-native";
 
 export default class SignUpForm extends Component {
-  state = {
-    email: "",
-    password: "",
-    confirmationPassword: ""
-  };
+  constructor() {
+    super();
+    this.state = {
+      name: "",
+      email: "",
+      password: "",
+      confirmationPassword: "",
+      error: null
+    };
+  }
   //handles state change key val pair
   handleChange = key => val => {
     this.setState({ [key]: val });
   };
-  componentWillMount() {
-    //get user data
-  }
+
   //submit form class for log in
-  submitForm = () => {
-    if(this.state.password == this.state.confirmationPassword){
-    
-    }else{
-        Alert.alert('Passwords do not match');
+  submit() {
+    let collection = {};
+    (collection.name = this.state.name),
+      (collection.email = this.state.email),
+      (collection.password = this.state.password);
+
+    if (
+      collection.password == this.state.confirmationPassword &&
+      collection.email.endsWith("@uncc.edu")
+    ) {
+      fetch("http://127.0.0.1:5000/api/signup", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          name: collection.name,
+          email: collection.email,
+          password: collection.password
+        })
+      }).catch(error => {
+        this.setState({
+          error
+        });
+      });
+      console.log(collection);
+      this.props.navigation.navigate("Login");
+    } else if (collection.password != this.state.confirmationPassword) {
+      Alert.alert("Passwords do not match");
+    } else {
+      Alert.alert("Please enter in a valid UNCC email address");
     }
-  };
+  }
 
   render() {
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
         <View style={styles.container}>
+          <TextInput //Email input box
+            placeholder="Name: "
+            placeholderTextColor="rgba(255,255,255,0.6)"
+            returnKeyType="next"
+            style={styles.input}
+            value={this.state.name}
+            onChangeText={this.handleChange("name")}
+          />
           <TextInput //Email input box
             placeholder="Enter An Email: "
             placeholderTextColor="rgba(255,255,255,0.6)"
@@ -60,16 +99,15 @@ export default class SignUpForm extends Component {
             returnKeyType="go"
             secureTextEntry
             style={styles.input}
-            value={this.state.confirmationPassword}as
+            value={this.state.confirmationPassword}
+            as
             onChangeText={this.handleChange("confirmationPassword")}
           />
 
           <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('Login')}
+            onPress={() => this.submit()}
             style={styles.buttonSignup}
           >
-          
-              
             <Text style={styles.buttonText}>Continue To Log In</Text>
           </TouchableOpacity>
         </View>

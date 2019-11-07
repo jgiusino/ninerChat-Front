@@ -19,10 +19,8 @@ import { createBottomTabNavigator} from 'react-navigation-tabs';
 
 
 // Get screen dimensions to adjust width
-// const WIDTH = Dimensions.get("window").width;
-// const DrawerConfig = {
-  //   drawerWidth: WIDTH * 0.83
-  // };
+ const WIDTH = Dimensions.get("window").width;
+
   
   /*
   
@@ -57,8 +55,16 @@ const AppDrawer = createDrawerNavigator(
     Login: {
       screen: AuthStack
     }
-  }
+  },
   // Config
+  {
+    drawerWidth: WIDTH * 0.70,
+    drawerBackgroundColor: '#565656',
+    contentOptions:{
+      inactiveTintColor: '#ffff'
+    },
+  }
+
 );
     
 const AppSwitch = createSwitchNavigator(

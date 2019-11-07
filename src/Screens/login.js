@@ -18,7 +18,7 @@ export default class Login extends Component {
             <Text style={styles.subTitle}>Connect | Learn | Grow</Text>
           </View>
           <View style={styles.formContainer}>
-            <LoginForm navigation={this.props.navigation} />
+            <LoginForm navigation={this.props.navigation}/>
           </View>
         </View>
       </KeyboardAvoidingView>
