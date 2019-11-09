@@ -24,23 +24,25 @@ export default class LoginForm extends Component {
     this.setState({ [key]: val });
   };
 
-
   //submit form class for log in
   submit() {
-    let url = "http://127.0.0.1:5000/api/login"
+    let url = "http://127.0.0.1:5000/api/login";
     let collection = {};
     (collection.email = this.state.email),
       (collection.password = this.state.password),
       console.log(collection);
-      fetch(url,{
-        method: 'POST',
-        body: JSON.stringify({
-          email: collection.email,
-          password: collection.email
-        })
+    fetch(url, {
+      method: "POST",
+      body: JSON.stringify({
+        email: collection.email,
+        password: collection.email
       })
-      this.props.navigation.navigate('Home')
-      
+    }).catch(error => {
+      this.setState({
+        error
+      });
+    });
+    this.props.navigation.navigate("Home");
   }
 
   render() {
