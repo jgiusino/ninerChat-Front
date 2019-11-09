@@ -8,10 +8,10 @@ import {
   Text,
   Button
 } from "react-native";
-import axios from "axios";
+import Axios from "axios";
 import { KeyboardAvoidingView } from "react-native";
 
-import saveToken from './AuthToken';
+import {saveToken} from './AuthToken';
 
 export default class SignUpForm extends Component {
   constructor() {
