@@ -12,46 +12,89 @@ import {
 import Hamburger from "../components/Hamburger";
 import { getToken } from "../components/AuthToken";
 
-const DATA = [
-  {
-    title: "Public Chats",
-    data: ["Woodward", "Comp Sci", "Union"]
-  },
-  {
-    title: "My Chats",
-    data: ["4155-001", "3160-003", "3155-002"]
-  }
-];
+import Axios from "axios";
+
+
 
 function ItemButton({ title }) {
   return (
     <View style={styles.itemBox}>
-      <TouchableOpacity>
+      <TouchableOpacity
+      >
         <Text style={styles.chat}>{title}</Text>
       </TouchableOpacity>
     </View>
   );
 }
 
-const _fetchToken = async () => {
-  console.log('in fetchToken');
-  let token = await getToken();
-  console.log('Home Token:'+ token);
-  return(token)
-};
 
 export default class Home extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      token: '',
+      rooms: []
+    }
+  }
+  
+  _fetchToken = async () => {
+    let t = await getToken();
+    this.setState({token: t});
+    console.log('Home Token:'+ this.state.token);
+  };
+
+  _fetchRooms = () => {
+    let url = global.URL + '/api/room';
+    let collecton = {
+      token: this.state.token
+    };
+    console.log(JSON.stringify(collecton));
+    Axios({
+      method: 'post',
+      url: url,
+      data: collecton
+    })
+    .then(response => {
+      let r = response.data;
+      this.setState({rooms: r.rooms})
+      console.log("rooms:" + JSON.stringify(this.state.rooms));
+    })
+    .catch(error => {
+      console.log(error)
+    });
+  };
+
+  componentDidMount() {
+    this._fetchToken().then(() => {
+      this._fetchRooms();
+    });
+  };
+
   render() {
-    _fetchToken();
-    
+    const DATA = [
+      {
+        title: "Public Chats",
+        data: ["Woodward", "Comp Sci", "Union"]
+      },
+      {
+        title: "My Chats",
+        data: ["4155-001", "3160-003", "3155-002"]
+      }
+    ];
+    let data = [
+      {
+        title: "Rooms",
+        data: this.state.rooms
+      }
+    ]
     return (
       <View style={styles.container}>
         <Hamburger navigation = {this.props.navigation} />
 
         <SectionList
-          sections={DATA}
+          sections={data}
           keyExtractor={(item, index) => item + index}
-          renderItem={({ item }) => <ItemButton title={item} />}
+          renderItem={({ item }) => <ItemButton title={item.name} />}
           renderSectionHeader={({ section: { title } }) => (
             <Text style={styles.title}>{title}</Text>
           )}
