@@ -29,25 +29,6 @@ export default class LoginForm extends Component {
 
   //submit form class for log in
   submit() {
-<<<<<<< HEAD
-    let url = "http://127.0.0.1:5000/api/login";
-    let collection = {};
-    (collection.email = this.state.email),
-      (collection.password = this.state.password),
-      console.log(collection);
-    fetch(url, {
-      method: "POST",
-      body: JSON.stringify({
-        email: collection.email,
-        password: collection.email
-      })
-    }).catch(error => {
-      this.setState({
-        error
-      });
-    });
-    this.props.navigation.navigate("Home");
-=======
     let url = global.URL + "/api/login";
     let collection = {
       email: this.state.email,
@@ -68,7 +49,6 @@ export default class LoginForm extends Component {
     .catch(error => {
       console.log(error)
     });
->>>>>>> d1f70fd213a61797850ede5d548f73f767c94c81
   }
 
   render() {
