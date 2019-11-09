@@ -11,6 +11,8 @@ import {
 import axios from "axios";
 import { KeyboardAvoidingView } from "react-native";
 
+import saveToken from './AuthToken';
+
 export default class SignUpForm extends Component {
   constructor() {
     super();
@@ -29,38 +31,37 @@ export default class SignUpForm extends Component {
 
   //submit form class for log in
   submit = (ev) => {
-    let url = "http://127.0.0.1:5000/api/signup"
-
-    let collection = {};
-    (collection.name = this.state.name),
-      (collection.email = this.state.email),
-      (collection.password = this.state.password);
-  
-
+    let url = global.URL + "/api/signup";
+    let collection = {
+      name:this.state.name,
+      email:this.state.email,
+      password:this.state.password
+    };
     if (
       collection.password == this.state.confirmationPassword &&
       collection.email.endsWith("@uncc.edu")
     ) {
-      fetch(url, {
-        method: "POST",
-        body: JSON.stringify({
-          name: collection.name,
-          email: collection.email,
-          password: collection.password
-        })
-      }).catch(error => {
-        this.setState({
-          error
-        });
-      });
-      console.log(collection);
-      this.props.navigation.navigate("Login");
+      console.log('Collection:' + JSON.stringify(collection));
+      Axios({
+        method: 'post',
+        url: url,
+        data: collection
+      })
+      .then(response => {
+        let token = response.data.token;
+        console.log("token:" +response.data.token);
+        saveToken(token);
+        this.props.navigation.navigate('App');
+      })
+      .catch(error => {
+        console.log(error)
+      })
     } else if (collection.password != this.state.confirmationPassword) {
       Alert.alert("Passwords do not match");
     } else{
       Alert.alert("Please enter in a valid UNCC email address");
     }
-  }
+  };
 
   render() {
     return (

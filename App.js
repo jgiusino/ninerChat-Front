@@ -11,21 +11,18 @@ import Login from "./src/Screens/login";
 import Chat from "./src/Screens/chat";
 import Home from "./src/Screens/Home";
 import SignUp from "./src/Screens/SignUp";
+import AuthLoading from "./src/Screens/AuthLoading";
 
 import { createDrawerNavigator } from "react-navigation-drawer";
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 import { createBottomTabNavigator} from 'react-navigation-tabs';
 
+// URL variable
+global.URL = "http://10.0.2.2:5000";
 
 // Get screen dimensions to adjust width
  const WIDTH = Dimensions.get("window").width;
-
-  
-  /*
-  
-  */
-
     
 const AuthStack = createStackNavigator(
   // Routes
@@ -70,6 +67,9 @@ const AppDrawer = createDrawerNavigator(
 const AppSwitch = createSwitchNavigator(
   // Routes
   {
+    Loading: {
+      screen: AuthLoading,
+    },
     Auth: {
       screen: AuthStack,
     },
