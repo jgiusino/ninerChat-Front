@@ -11,8 +11,6 @@ import {
 import axios from "axios";
 import { KeyboardAvoidingView } from "react-native";
 
-import saveToken from './AuthToken';
-
 export default class SignUpForm extends Component {
   constructor() {
     super();
@@ -30,16 +28,6 @@ export default class SignUpForm extends Component {
   };
 
   //submit form class for log in
-<<<<<<< HEAD
-  submit = ev => {
-    let url = "http://127.0.0.1:5000/api/signup";
-
-    let collection = {};
-    (collection.name = this.state.name),
-      (collection.email = this.state.email),
-      (collection.password = this.state.password);
-
-=======
   submit = (ev) => {
     let url = global.URL + "/api/signup";
     let collection = {
@@ -47,7 +35,7 @@ export default class SignUpForm extends Component {
       email:this.state.email,
       password:this.state.password
     };
->>>>>>> d1f70fd213a61797850ede5d548f73f767c94c81
+
     if (
       collection.password == this.state.confirmationPassword &&
       collection.email.endsWith("@uncc.edu")
@@ -73,7 +61,6 @@ export default class SignUpForm extends Component {
       Alert.alert("Please enter in a valid UNCC email address");
     }
   };
-
   render() {
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
