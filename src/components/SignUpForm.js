@@ -28,22 +28,21 @@ export default class SignUpForm extends Component {
   };
 
   //submit form class for log in
-  submit() {
+  submit = (ev) => {
+    let url = "http://127.0.0.1:5000/api/signup"
+
     let collection = {};
     (collection.name = this.state.name),
       (collection.email = this.state.email),
       (collection.password = this.state.password);
+  
 
     if (
       collection.password == this.state.confirmationPassword &&
       collection.email.endsWith("@uncc.edu")
     ) {
-      fetch("http://127.0.0.1:5000/api/signup", {
+      fetch(url, {
         method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        },
         body: JSON.stringify({
           name: collection.name,
           email: collection.email,
@@ -58,7 +57,7 @@ export default class SignUpForm extends Component {
       this.props.navigation.navigate("Login");
     } else if (collection.password != this.state.confirmationPassword) {
       Alert.alert("Passwords do not match");
-    } else {
+    } else{
       Alert.alert("Please enter in a valid UNCC email address");
     }
   }
