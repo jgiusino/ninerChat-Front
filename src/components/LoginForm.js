@@ -9,7 +9,10 @@ import {
   Button
 } from "react-native";
 import { KeyboardAvoidingView } from "react-native";
+
 import Axios from "axios";
+
+import {saveToken} from "./AuthToken";
 
 export default class LoginForm extends Component {
   constructor() {
@@ -26,6 +29,7 @@ export default class LoginForm extends Component {
 
   //submit form class for log in
   submit() {
+<<<<<<< HEAD
     let url = "http://127.0.0.1:5000/api/login";
     let collection = {};
     (collection.email = this.state.email),
@@ -43,6 +47,28 @@ export default class LoginForm extends Component {
       });
     });
     this.props.navigation.navigate("Home");
+=======
+    let url = global.URL + "/api/login";
+    let collection = {
+      email: this.state.email,
+      password: this.state.password
+    };
+    console.log('Collection:' + JSON.stringify(collection));
+    Axios({
+      method: 'post',
+      url: url,
+      data: collection
+    })
+    .then(response => {
+      let token = response.data.token;
+      console.log("token:" +response.data.token);
+      saveToken(token);
+      this.props.navigation.navigate('App');
+    })
+    .catch(error => {
+      console.log(error)
+    });
+>>>>>>> d1f70fd213a61797850ede5d548f73f767c94c81
   }
 
   render() {

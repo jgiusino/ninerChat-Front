@@ -10,6 +10,7 @@ import {
   TouchEvent
 } from "react-native";
 import Hamburger from "../components/Hamburger";
+import { getToken } from "../components/AuthToken";
 
 const DATA = [
   {
@@ -32,8 +33,17 @@ function ItemButton({ title }) {
   );
 }
 
+const _fetchToken = async () => {
+  console.log('in fetchToken');
+  let token = await getToken();
+  console.log('Home Token:'+ token);
+  return(token)
+};
+
 export default class Home extends React.Component {
   render() {
+    _fetchToken();
+    
     return (
       <View style={styles.container}>
         <Hamburger navigation = {this.props.navigation} />
