@@ -7,7 +7,8 @@ import {
   TouchableOpacity,
   Image,
   Button,
-  TouchEvent
+  TouchEvent,
+  Alert
 } from "react-native";
 import Hamburger from "../components/Hamburger";
 import { getToken } from "../components/AuthToken";
@@ -16,12 +17,15 @@ import Axios from "axios";
 
 
 
-function ItemButton({ title }) {
+function ItemButton({ item }) {
   return (
     <View style={styles.itemBox}>
-      <TouchableOpacity
+      <TouchableOpacity 
+      onPress={ () => {
+        Alert.alert('Entering room id ' + item.id)
+      }}
       >
-        <Text style={styles.chat}>{title}</Text>
+        <Text style={styles.chat}>{item.name}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -94,7 +98,7 @@ export default class Home extends React.Component {
         <SectionList
           sections={data}
           keyExtractor={(item, index) => item + index}
-          renderItem={({ item }) => <ItemButton title={item.name} />}
+          renderItem={({ item }) => <ItemButton item={item} />}
           renderSectionHeader={({ section: { title } }) => (
             <Text style={styles.title}>{title}</Text>
           )}
