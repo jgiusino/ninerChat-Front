@@ -120,7 +120,8 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   chat: {
-    backgroundColor: "#9559fe",
+    //backgroundColor: "#00713d",
+    backgroundColor: "#006940",
     color: "white",
     marginTop: "3%",
     width: 200,

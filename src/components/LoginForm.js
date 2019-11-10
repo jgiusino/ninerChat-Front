@@ -113,24 +113,28 @@ const styles = StyleSheet.create({
     height: 40,
     textAlign: "center",
     justifyContent: "center",
-    backgroundColor: "#D4AF37",
+    //backgroundColor: "#D4AF37",
+    backgroundColor: "#9a8648",
     marginBottom: 20,
     color: "#fff",
     paddingHorizontal: 10,
     borderRadius: 10,
-    borderColor: "#D4AF37",
+    //borderColor: "#D4AF37",
+    borderColor: "#9a8648",
     borderWidth: 1
   },
   buttonSignup: {
     height: 40,
     textAlign: "center",
     justifyContent: "center",
-    backgroundColor: "#21B452",
+    //backgroundColor: "#21B452",
+    backgroundColor: "#006940",
     marginBottom: 20,
     color: "#fff",
     paddingHorizontal: 10,
     borderRadius: 10,
-    borderColor: "#21B452",
+    //borderColor: "#21B452"
+    borderColor: "#006940",
     borderWidth: 1
   },
   buttonText: {
