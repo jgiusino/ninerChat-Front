@@ -5,7 +5,7 @@ import {
     AsyncStorage
 } from 'react-native';
 
-import {getToken} from "../components/AuthToken";
+import {getToken} from "../components/Storage";
 
 export default class AuthLoading extends Component {
     constructor(props) {

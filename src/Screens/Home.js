@@ -11,7 +11,7 @@ import {
   Alert
 } from "react-native";
 import Hamburger from "../components/Hamburger";
-import { getToken } from "../components/AuthToken";
+import { getToken } from "../components/Storage";
 
 import Axios from "axios";
 

@@ -12,7 +12,7 @@ import { KeyboardAvoidingView } from "react-native";
 
 import Axios from "axios";
 
-import {saveToken} from "./AuthToken";
+import {saveToken} from "./Storage";
 
 export default class LoginForm extends Component {
   constructor() {

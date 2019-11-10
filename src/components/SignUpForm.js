@@ -11,7 +11,7 @@ import {
 import Axios from "axios";
 import { KeyboardAvoidingView } from "react-native";
 
-import {saveToken} from './AuthToken';
+import {saveToken} from './Storage';
 
 export default class SignUpForm extends Component {
   constructor() {
