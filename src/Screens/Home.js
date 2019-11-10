@@ -11,25 +11,10 @@ import {
   Alert
 } from "react-native";
 import Hamburger from "../components/Hamburger";
-import { getToken } from "../components/Storage";
+import { getToken, setRoom } from "../components/Storage";
 
 import Axios from "axios";
 
-
-
-function ItemButton({ item }) {
-  return (
-    <View style={styles.itemBox}>
-      <TouchableOpacity 
-      onPress={ () => {
-        Alert.alert('Entering room id ' + item.id)
-      }}
-      >
-        <Text style={styles.chat}>{item.name}</Text>
-      </TouchableOpacity>
-    </View>
-  );
-}
 
 
 export default class Home extends React.Component {
@@ -39,6 +24,17 @@ export default class Home extends React.Component {
       token: '',
       rooms: []
     }
+  }
+
+  _onPress = (room) => {
+    let roomObject = {
+      id: room.id,
+      name: room.name,
+      messages: []
+    };
+    setRoom(JSON.stringify(roomObject)).then( () => {
+      this.props.navigation.navigate('Chat')
+    });
   }
   
   _fetchToken = async () => {
@@ -75,16 +71,6 @@ export default class Home extends React.Component {
   };
 
   render() {
-    const DATA = [
-      {
-        title: "Public Chats",
-        data: ["Woodward", "Comp Sci", "Union"]
-      },
-      {
-        title: "My Chats",
-        data: ["4155-001", "3160-003", "3155-002"]
-      }
-    ];
     let data = [
       {
         title: "Rooms",
@@ -98,7 +84,15 @@ export default class Home extends React.Component {
         <SectionList
           sections={data}
           keyExtractor={(item, index) => item + index}
-          renderItem={({ item }) => <ItemButton item={item} />}
+          renderItem={({ item }) => { return (
+            <View style={styles.itemBox}>
+              <TouchableOpacity 
+                onPress={(item) => { this._onPress(item) }}
+              >
+              <Text style={styles.chat}>{item.name}</Text>
+              </TouchableOpacity>
+            </View>
+          )}}
           renderSectionHeader={({ section: { title } }) => (
             <Text style={styles.title}>{title}</Text>
           )}
