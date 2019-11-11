@@ -22,18 +22,20 @@ export default class Home extends React.Component {
     super(props);
     this.state = {
       token: '',
-      rooms: []
+      rooms: [],
     }
   }
 
   _onPress = (room) => {
+    console.log("id:"+room.id);
+    console.log("name:"+room.name);
     let roomObject = {
       id: room.id,
       name: room.name,
       messages: []
     };
     setRoom(JSON.stringify(roomObject)).then( () => {
-      this.props.navigation.navigate('Chat')
+      this.props.navigation.navigate('Chat', {date: new Date()});
     });
   }
   
@@ -65,10 +67,16 @@ export default class Home extends React.Component {
   };
 
   componentDidMount() {
-    this._fetchToken().then(() => {
-      this._fetchRooms();
+    this._navLister = this.props.navigation.addListener('didFocus', () =>{
+      this._fetchToken().then(() => {
+        this._fetchRooms();
+      });
     });
   };
+
+  componentWillReceiveProps() {
+    console.log('rerender...');
+  }
 
   render() {
     let data = [
@@ -87,7 +95,7 @@ export default class Home extends React.Component {
           renderItem={({ item }) => { return (
             <View style={styles.itemBox}>
               <TouchableOpacity 
-                onPress={(item) => { this._onPress(item) }}
+                onPress={() =>{this._onPress(item)}}
               >
               <Text style={styles.chat}>{item.name}</Text>
               </TouchableOpacity>
