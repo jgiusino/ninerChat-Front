@@ -55,7 +55,7 @@ const AppDrawer = createDrawerNavigator(
     Home: {
       screen: Home
     },
-    Login: {
+    logout: {
       screen: Login
     },
     Chat: {

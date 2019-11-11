@@ -150,8 +150,9 @@ function Item({ text,name,time,type }) {
   let itemStyle = (type === 'in' ? styles.itemIn : styles.itemOut);
   return (
     <View style={[styles.item,itemStyle]}>
+      <View style={styles.userName}>{name}</View>
       <View style={styles.balloon}>
-        <Text style={styles.messages}>{name}:{text}</Text>
+        <Text style={styles.messages}>{text}</Text>
         </View>
     </View>
   );
@@ -161,6 +162,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#1A1A1B"
+  },
+  username: {
+    color: "#fff",
+    underlineColorAndroid= "#fff",
+    fontSize=14
   },
   messages: {
     color: "#fff"
