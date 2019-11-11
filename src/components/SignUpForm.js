@@ -8,12 +8,11 @@ import {
   Text,
   Button
 } from "react-native";
-import Axios from "axios";
+import axios from "axios";
 import { KeyboardAvoidingView } from "react-native";
-import { saveToken } from "./AuthToken";
+import { saveToken } from "./Storage";
 import { ThemeColors } from "react-navigation";
 
-import {saveToken} from './Storage';
 
 export default class SignUpForm extends Component {
   constructor() {
@@ -58,11 +57,10 @@ export default class SignUpForm extends Component {
         })
         .catch(error => {
           console.log(error);
-         
         });
     } else if (collection.password != this.state.confirmationPassword) {
       Alert.alert("Passwords do not match");
-    }else {
+    } else {
       Alert.alert("Please enter in a valid UNCC email address");
     }
   };

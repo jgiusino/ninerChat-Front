@@ -30,20 +30,12 @@ export default class LoginForm extends Component {
   //submit form class for log in
   submit() {
     let url = global.URL + "/api/login";
-<<<<<<< HEAD
-    let collection = {};
-    (collection.email = this.state.email),
-      (collection.password = this.state.password),
-      console.log('Collection:' + JSON.stringify(collection));
-    axios({
-=======
     let collection = {
       email: this.state.email,
       password: this.state.password
     };
     console.log('Collection:' + JSON.stringify(collection));
-    Axios({
->>>>>>> 808107bae511f80aad015b60089a6354c252213f
+    axios({
       method: 'post',
       url: url,
       data: collection
@@ -54,12 +46,7 @@ export default class LoginForm extends Component {
       this.props.navigation.navigate("Loading");
     }).catch(error => {
       console.log(error)
-<<<<<<< HEAD
-    })
-    
-=======
     });
->>>>>>> 808107bae511f80aad015b60089a6354c252213f
   }
 
   render() {

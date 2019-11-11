@@ -13,69 +13,67 @@ import {
 import Hamburger from "../components/Hamburger";
 import { getToken, setRoom } from "../components/Storage";
 
-import Axios from "axios";
-
-
+import axios from "axios";
 
 export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      token: '',
-      rooms: [],
-    }
+      token: "",
+      rooms: []
+    };
   }
 
-  _onPress = (room) => {
-    console.log("id:"+room.id);
-    console.log("name:"+room.name);
+  _onPress = room => {
+    console.log("id:" + room.id);
+    console.log("name:" + room.name);
     let roomObject = {
       id: room.id,
       name: room.name,
       messages: []
     };
-    setRoom(JSON.stringify(roomObject)).then( () => {
-      this.props.navigation.navigate('Chat', {date: new Date()});
+    setRoom(JSON.stringify(roomObject)).then(() => {
+      this.props.navigation.navigate("Chat", { date: new Date() });
     });
-  }
-  
+  };
+
   _fetchToken = async () => {
     let t = await getToken();
-    this.setState({token: t});
-    console.log('Home Token:'+ this.state.token);
+    this.setState({ token: t });
+    console.log("Home Token:" + this.state.token);
   };
 
   _fetchRooms = () => {
-    let url = global.URL + '/api/room';
+    let url = global.URL + "/api/room";
     let collecton = {
       token: this.state.token
     };
     console.log(JSON.stringify(collecton));
-    Axios({
-      method: 'post',
+    axios({
+      method: "post",
       url: url,
       data: collecton
     })
-    .then(response => {
-      let r = response.data;
-      this.setState({rooms: r.rooms})
-      console.log("rooms:" + JSON.stringify(this.state.rooms));
-    })
-    .catch(error => {
-      console.log(error)
-    });
+      .then(response => {
+        let r = response.data;
+        this.setState({ rooms: r.rooms });
+        console.log("rooms:" + JSON.stringify(this.state.rooms));
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   componentDidMount() {
-    this._navLister = this.props.navigation.addListener('didFocus', () =>{
+    this._navLister = this.props.navigation.addListener("didFocus", () => {
       this._fetchToken().then(() => {
         this._fetchRooms();
       });
     });
-  };
+  }
 
   componentWillReceiveProps() {
-    console.log('rerender...');
+    console.log("rerender...");
   }
 
   render() {
@@ -84,23 +82,27 @@ export default class Home extends React.Component {
         title: "Rooms",
         data: this.state.rooms
       }
-    ]
+    ];
     return (
       <View style={styles.container}>
-        <Hamburger navigation = {this.props.navigation} />
+        <Hamburger navigation={this.props.navigation} />
 
         <SectionList
           sections={data}
           keyExtractor={(item, index) => item + index}
-          renderItem={({ item }) => { return (
-            <View style={styles.itemBox}>
-              <TouchableOpacity 
-                onPress={() =>{this._onPress(item)}}
-              >
-              <Text style={styles.chat}>{item.name}</Text>
-              </TouchableOpacity>
-            </View>
-          )}}
+          renderItem={({ item }) => {
+            return (
+              <View style={styles.itemBox}>
+                <TouchableOpacity
+                  onPress={() => {
+                    this._onPress(item);
+                  }}
+                >
+                  <Text style={styles.chat}>{item.name}</Text>
+                </TouchableOpacity>
+              </View>
+            );
+          }}
           renderSectionHeader={({ section: { title } }) => (
             <Text style={styles.title}>{title}</Text>
           )}
@@ -132,7 +134,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 10,
     marginBottom: 10,
-    padding: 20,
+    padding: 20
   },
   title: {
     color: "white",
