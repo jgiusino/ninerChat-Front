@@ -13,34 +13,97 @@ import {
 } from "react-native";
 import axios from "axios";
 import { KeyboardAvoidingView } from "react-native";
+<<<<<<< HEAD
 import { UserInterfaceIdiom } from "expo-constants";
 import { getSupportedVideoFormats } from "expo/build/AR";
 import {AuthToken} from '../components/AuthToken'
 
+=======
+import { getRoom, getToken } from "../components/Storage";
+
+import Axios from "axios";
+>>>>>>> 808107bae511f80aad015b60089a6354c252213f
 
 export default class Chat extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [
-        {
-          id: 1,
-          date: "9:50 am",
-          type: "in",
-          message: "Lorem ipsum dolor sit amet"
-        },
-        {
-          id: 1,
-          date: "9:50 am",
-          type: "in",
-          message: "Lorem ipsum dolor sit amet"
-        }
-      ]
+      messages:'',
+      token:'',
+      room: null,
+      text:''
     };
   }
 
-  renderDate = date => {
-    return <Text style={styles.time}>{date}</Text>;
+  _fetchToken = async () => {
+    let t = await getToken();
+    this.setState({token: t});
+    console.log('Chat Token:'+ this.state.token);
+  };
+
+  _fetchRoom = async () => {
+    let roomObject = await getRoom();
+    this.setState({room: JSON.parse(roomObject)});
+    console.log(JSON.stringify(this.state.room));
+    
+    // get room messages
+    let url = global.URL + "/api/room/"+this.state.room.id+"/messages";
+    let collecton = {
+      token: this.state.token
+    };
+    Axios({
+      method: 'post',
+      url: url,
+      data: collecton
+    })
+    .then(response => {
+      let r = response.data;
+      this.setState({messages: r.messages});
+      console.log(JSON.stringify(r.messages));
+    })
+    .catch(error => {
+      console.log(error)
+    });
+  };
+
+  componentDidMount() {
+    // listens to see if focus changed, fetch data, and rerender page
+    this._navLister = this.props.navigation.addListener('didFocus', () =>{
+      this._fetchData();
+      });
+  };
+
+  _fetchData () {
+    // fetchs token and room data
+    this._fetchToken().then(() => {
+      this._fetchRoom();
+    });
+  }
+
+  _onPress() {
+    let url = global.URL + "/api/room/"+this.state.room.id;
+    let collection = {
+      token:this.state.token,
+      text:this.state.text
+    };
+    console.log('Collection:' + JSON.stringify(collection));
+    Axios({
+      method: 'post',
+      url: url,
+      data: collection
+    })
+    .then(response => {
+      console.log('PostMessage:'+response.data);
+    })
+    .catch(error => {
+      console.log(error)
+    });
+    this._fetchData();
+  }
+  
+  //handles state change key val pair
+  handleChange = key => val => {
+    this.setState({ [key]: val });
   };
 
   //get messages for the chatroom
@@ -67,49 +130,54 @@ getUser(){
         <View style={styles.container}>
           <FlatList
             style={styles.list}
-            data={this.state.data}
-            keyExtractor={item => {
-              return item.id;
-            }}
-            renderItem={message => {
-              console.log(item);
-              const item = message.item;
-              let inMessage = item.type === "in";
-              let itemStyle = inMessage ? styles.itemIn : styles.itemOut;
-              return (
-                <View style={[styles.item, itemStyle]}>
-                  {!inMessage && this.renderDate(item.date)}
-                  <View style={[styles.balloon]}>
-                    <Text style={styles.messages}>{item.message}</Text>
-                  </View>
-                  {inMessage && this.renderDate(item.date)}
-                </View>
-              );
-            }}
+            data={this.state.messages}
+            renderItem={({item}) => <Item 
+              name={item.name}  
+              text={item.text}
+              time={item.time}
+              type={item.type} 
+            />}
+            keyExtractor={item => 'id'+item.id}
           />
           <View style={styles.footer}>
-            <View style={styles.inputContainer}>
-              <TextInput
-                style={styles.inputs}
-                placeholder="Write a message..."
-                underlineColorAndroid="transparent"
-                keyboardType="default"
-              />
-            </View>
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.inputs}
+          placeholder="Write a message..."
+          underlineColorAndroid="transparent"
+          keyboardType="default"
+          value={this.state.text}
+          onChangeText={this.handleChange("text")}
+        />
+      </View>
 
-            <TouchableOpacity style={styles.btnSend}>
-              <Image
-                source={{
-                  uri: "https://png.icons8.com/small/75/ffffff/filled-sent.png"
-                }}
-                style={styles.iconSend}
-              />
-            </TouchableOpacity>
-          </View>
+      <TouchableOpacity 
+        style={styles.btnSend}
+        onPress={() => {
+          this._onPress();
+        }}
+      >
+        <Image
+          source={{
+            uri: "https://png.icons8.com/small/75/ffffff/filled-sent.png"
+          }}
+          style={styles.iconSend}
+        />
+      </TouchableOpacity>
+    </View>
         </View>
       </KeyboardAvoidingView>
     );
   }
+}
+
+function Item({ text,name,time,type }) {
+  let itemStyle = (type === 'in' ? styles.itemIn : styles.itemOut);
+  return (
+    <View style={styles.item}>
+        <Text style={styles.messages}>{name}:{text}</Text>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -122,6 +190,12 @@ const styles = StyleSheet.create({
   },
   list: {
     paddingHorizontal: 17
+  },
+  title: {
+    color: "white",
+    fontSize: 24,
+    marginTop: "15%",
+    marginLeft: "25%"
   },
   footer: {
     flexDirection: "row",

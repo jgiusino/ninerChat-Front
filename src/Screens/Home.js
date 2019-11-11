@@ -7,51 +7,100 @@ import {
   TouchableOpacity,
   Image,
   Button,
-  TouchEvent
+  TouchEvent,
+  Alert
 } from "react-native";
 import Hamburger from "../components/Hamburger";
-import { getToken } from "../components/AuthToken";
+import { getToken, setRoom } from "../components/Storage";
 
-const DATA = [
-  {
-    title: "Public Chats",
-    data: ["Woodward", "Comp Sci", "Union"]
-  },
-  {
-    title: "My Chats",
-    data: ["4155-001", "3160-003", "3155-002"]
-  }
-];
+import Axios from "axios";
 
-function ItemButton({ title }) {
-  return (
-    <View style={styles.itemBox}>
-      <TouchableOpacity>
-        <Text style={styles.chat}>{title}</Text>
-      </TouchableOpacity>
-    </View>
-  );
-}
 
-const _fetchToken = async () => {
-  console.log('in fetchToken');
-  let token = await getToken();
-  console.log('Home Token:'+ token);
-  return(token)
-};
 
 export default class Home extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      token: '',
+      rooms: [],
+    }
+  }
+
+  _onPress = (room) => {
+    console.log("id:"+room.id);
+    console.log("name:"+room.name);
+    let roomObject = {
+      id: room.id,
+      name: room.name,
+      messages: []
+    };
+    setRoom(JSON.stringify(roomObject)).then( () => {
+      this.props.navigation.navigate('Chat', {date: new Date()});
+    });
+  }
+  
+  _fetchToken = async () => {
+    let t = await getToken();
+    this.setState({token: t});
+    console.log('Home Token:'+ this.state.token);
+  };
+
+  _fetchRooms = () => {
+    let url = global.URL + '/api/room';
+    let collecton = {
+      token: this.state.token
+    };
+    console.log(JSON.stringify(collecton));
+    Axios({
+      method: 'post',
+      url: url,
+      data: collecton
+    })
+    .then(response => {
+      let r = response.data;
+      this.setState({rooms: r.rooms})
+      console.log("rooms:" + JSON.stringify(this.state.rooms));
+    })
+    .catch(error => {
+      console.log(error)
+    });
+  };
+
+  componentDidMount() {
+    this._navLister = this.props.navigation.addListener('didFocus', () =>{
+      this._fetchToken().then(() => {
+        this._fetchRooms();
+      });
+    });
+  };
+
+  componentWillReceiveProps() {
+    console.log('rerender...');
+  }
+
   render() {
-    _fetchToken();
-    
+    let data = [
+      {
+        title: "Rooms",
+        data: this.state.rooms
+      }
+    ]
     return (
       <View style={styles.container}>
         <Hamburger navigation = {this.props.navigation} />
 
         <SectionList
-          sections={DATA}
+          sections={data}
           keyExtractor={(item, index) => item + index}
-          renderItem={({ item }) => <ItemButton title={item} />}
+          renderItem={({ item }) => { return (
+            <View style={styles.itemBox}>
+              <TouchableOpacity 
+                onPress={() =>{this._onPress(item)}}
+              >
+              <Text style={styles.chat}>{item.name}</Text>
+              </TouchableOpacity>
+            </View>
+          )}}
           renderSectionHeader={({ section: { title } }) => (
             <Text style={styles.title}>{title}</Text>
           )}
@@ -73,7 +122,8 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   chat: {
-    backgroundColor: "#9559fe",
+    //backgroundColor: "#00713d",
+    backgroundColor: "#006940",
     color: "white",
     marginTop: "3%",
     width: 200,

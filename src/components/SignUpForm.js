@@ -8,10 +8,12 @@ import {
   Text,
   Button
 } from "react-native";
-import axios from "axios";
+import Axios from "axios";
 import { KeyboardAvoidingView } from "react-native";
 import { saveToken } from "./AuthToken";
 import { ThemeColors } from "react-navigation";
+
+import {saveToken} from './Storage';
 
 export default class SignUpForm extends Component {
   constructor() {

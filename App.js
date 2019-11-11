@@ -56,7 +56,10 @@ const AppDrawer = createDrawerNavigator(
       screen: Home
     },
     Login: {
-      screen: AuthStack
+      screen: Login
+    },
+    Chat: {
+      screen: Chat,
     }
   },
   // Config
@@ -77,8 +80,8 @@ const AppSwitch = createSwitchNavigator(
       screen: AuthStack
     },
     App: {
-      screen: AppDrawer
-    }
+      screen: AppDrawer,
+    },
   }
   // Config
 );

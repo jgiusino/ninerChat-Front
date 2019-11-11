@@ -12,7 +12,7 @@ import { KeyboardAvoidingView } from "react-native";
 
 import axios from "axios";
 
-import {saveToken} from "./AuthToken";
+import {saveToken} from "./Storage";
 
 export default class LoginForm extends Component {
   constructor() {
@@ -30,11 +30,20 @@ export default class LoginForm extends Component {
   //submit form class for log in
   submit() {
     let url = global.URL + "/api/login";
+<<<<<<< HEAD
     let collection = {};
     (collection.email = this.state.email),
       (collection.password = this.state.password),
       console.log('Collection:' + JSON.stringify(collection));
     axios({
+=======
+    let collection = {
+      email: this.state.email,
+      password: this.state.password
+    };
+    console.log('Collection:' + JSON.stringify(collection));
+    Axios({
+>>>>>>> 808107bae511f80aad015b60089a6354c252213f
       method: 'post',
       url: url,
       data: collection
@@ -45,8 +54,12 @@ export default class LoginForm extends Component {
       this.props.navigation.navigate("Loading");
     }).catch(error => {
       console.log(error)
+<<<<<<< HEAD
     })
     
+=======
+    });
+>>>>>>> 808107bae511f80aad015b60089a6354c252213f
   }
 
   render() {
@@ -111,24 +124,28 @@ const styles = StyleSheet.create({
     height: 40,
     textAlign: "center",
     justifyContent: "center",
-    backgroundColor: "#D4AF37",
+    //backgroundColor: "#D4AF37",
+    backgroundColor: "#9a8648",
     marginBottom: 20,
     color: "#fff",
     paddingHorizontal: 10,
     borderRadius: 10,
-    borderColor: "#D4AF37",
+    //borderColor: "#D4AF37",
+    borderColor: "#9a8648",
     borderWidth: 1
   },
   buttonSignup: {
     height: 40,
     textAlign: "center",
     justifyContent: "center",
-    backgroundColor: "#21B452",
+    //backgroundColor: "#21B452",
+    backgroundColor: "#006940",
     marginBottom: 20,
     color: "#fff",
     paddingHorizontal: 10,
     borderRadius: 10,
-    borderColor: "#21B452",
+    //borderColor: "#21B452"
+    borderColor: "#006940",
     borderWidth: 1
   },
   buttonText: {

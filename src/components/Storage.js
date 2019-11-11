@@ -31,3 +31,28 @@ export const deleteToken = async () => {
         console.log(error);
     }
 }
+
+export const setRoom = async (r) => {
+    try {
+        await AsyncStorage.setItem('room',r);
+    } catch(error) {
+        console.log(error);
+    }
+}
+
+export const getRoom = async () => {
+    try {
+        let room = await AsyncStorage.getItem('room');
+        return(room);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const deleteRoom = async () => {
+    try {
+        await AsyncStorage.removeItem('room');
+    } catch (error) {
+        console.log(error);
+    }
+}
