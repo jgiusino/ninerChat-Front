@@ -9,10 +9,14 @@ import {
   ScrollView,
   TextInput,
   FlatList,
-  Button
+  Button,
 } from "react-native";
-
+import axios from "axios";
 import { KeyboardAvoidingView } from "react-native";
+import { UserInterfaceIdiom } from "expo-constants";
+import { getSupportedVideoFormats } from "expo/build/AR";
+import {AuthToken} from '../components/AuthToken'
+
 
 export default class Chat extends Component {
   constructor(props) {
@@ -38,6 +42,24 @@ export default class Chat extends Component {
   renderDate = date => {
     return <Text style={styles.time}>{date}</Text>;
   };
+
+  //get messages for the chatroom
+getMessages(){
+  
+  let url = global.URL + "/room/<id>/messages"
+  axios({
+    method: 'post',
+    url: url,
+    data: collection
+  })
+}
+
+getUser(){
+  let url = global.URL + "/api/profile"
+  axios({
+    method:
+  })
+}
 
   render() {
     return (

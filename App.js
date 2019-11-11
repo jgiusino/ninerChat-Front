@@ -16,38 +16,44 @@ import AuthLoading from "./src/Screens/AuthLoading";
 import { createDrawerNavigator } from "react-navigation-drawer";
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
-import { createBottomTabNavigator} from 'react-navigation-tabs';
+import { createBottomTabNavigator } from "react-navigation-tabs";
 
 // URL variable
 global.URL = "http://10.0.2.2:5000";
 
 // Get screen dimensions to adjust width
- const WIDTH = Dimensions.get("window").width;
-    
+const WIDTH = Dimensions.get("window").width;
+
 const AuthStack = createStackNavigator(
   // Routes
   {
     Login: {
       screen: Login,
       navigationOptions: {
-        header: null  // removes the header
+        header: null // removes the header
       }
     },
     SignUp: {
       screen: SignUp,
       navigationOptions: {
-        header: null  // removes the header
+        header: null // removes the header
+      }
+    },
+    Loading: {
+      screen: AuthLoading,
+      navigationOptions:{
+        header: null
       }
     }
   }
   // Config
 );
-    
+
 const AppDrawer = createDrawerNavigator(
   // Routes
   {
     Home: {
-      screen: Home,
+      screen: Home
     },
     Login: {
       screen: AuthStack
@@ -55,26 +61,23 @@ const AppDrawer = createDrawerNavigator(
   },
   // Config
   {
-    drawerWidth: WIDTH * 0.70,
-    drawerBackgroundColor: '#565656',
-    contentOptions:{
-      inactiveTintColor: '#ffff'
-    },
+    drawerWidth: WIDTH * 0.7,
+    drawerBackgroundColor: "#565656",
+    contentOptions: {
+      inactiveTintColor: "#ffff"
+    }
   }
-
 );
-    
+
 const AppSwitch = createSwitchNavigator(
   // Routes
   {
-    Loading: {
-      screen: AuthLoading,
-    },
+  
     Auth: {
-      screen: AuthStack,
+      screen: AuthStack
     },
     App: {
-      screen: AppDrawer,
+      screen: AppDrawer
     }
   }
   // Config
@@ -91,9 +94,9 @@ AuthStack -> [Login,SignUp]
 MainTabs -> [Home, Chat]
 */
 const AppContainer = createAppContainer(AppSwitch);
-      
+
 export default class App extends React.Component {
   render() {
     return <AppContainer />;
   }
-};
+}

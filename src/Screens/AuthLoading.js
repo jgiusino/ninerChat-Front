@@ -16,9 +16,9 @@ export default class AuthLoading extends Component {
     checkToken() {
         let token = getToken();
         if (token === 'none') {
-            this.props.navigation.navigate('App');
+            this.props.navigation.navigate('Login');
         } else {
-            this.props.navigation.navigate('Auth');
+            this.props.navigation.navigate('Home');
         };
     };
 

@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { KeyboardAvoidingView } from "react-native";
 
-import Axios from "axios";
+import axios from "axios";
 
 import {saveToken} from "./AuthToken";
 
@@ -29,46 +29,24 @@ export default class LoginForm extends Component {
 
   //submit form class for log in
   submit() {
-<<<<<<< HEAD
-    let url = "http://127.0.0.1:5000/api/login";
+    let url = global.URL + "/api/login";
     let collection = {};
     (collection.email = this.state.email),
       (collection.password = this.state.password),
-      console.log(collection);
-    fetch(url, {
-      method: "POST",
-      body: JSON.stringify({
-        email: collection.email,
-        password: collection.email
-      })
-    }).catch(error => {
-      this.setState({
-        error
-      });
-    });
-    this.props.navigation.navigate("Home");
-=======
-    let url = global.URL + "/api/login";
-    let collection = {
-      email: this.state.email,
-      password: this.state.password
-    };
-    console.log('Collection:' + JSON.stringify(collection));
-    Axios({
+      console.log('Collection:' + JSON.stringify(collection));
+    axios({
       method: 'post',
       url: url,
       data: collection
-    })
-    .then(response => {
+    }).then(response =>{
       let token = response.data.token;
       console.log("token:" +response.data.token);
       saveToken(token);
-      this.props.navigation.navigate('App');
-    })
-    .catch(error => {
+      this.props.navigation.navigate("Loading");
+    }).catch(error => {
       console.log(error)
-    });
->>>>>>> d1f70fd213a61797850ede5d548f73f767c94c81
+    })
+    
   }
 
   render() {

@@ -10,6 +10,8 @@ import {
 } from "react-native";
 import axios from "axios";
 import { KeyboardAvoidingView } from "react-native";
+import { saveToken } from "./AuthToken";
+import { ThemeColors } from "react-navigation";
 
 export default class SignUpForm extends Component {
   constructor() {
@@ -19,7 +21,7 @@ export default class SignUpForm extends Component {
       email: "",
       password: "",
       confirmationPassword: "",
-      error: null
+      err: false
     };
   }
   //handles state change key val pair
@@ -28,36 +30,37 @@ export default class SignUpForm extends Component {
   };
 
   //submit form class for log in
-  submit = (ev) => {
+  submit = ev => {
     let url = global.URL + "/api/signup";
     let collection = {
-      name:this.state.name,
-      email:this.state.email,
-      password:this.state.password
+      name: this.state.name,
+      email: this.state.email,
+      password: this.state.password
     };
 
     if (
       collection.password == this.state.confirmationPassword &&
       collection.email.endsWith("@uncc.edu")
     ) {
-      console.log('Collection:' + JSON.stringify(collection));
-      Axios({
-        method: 'post',
+      console.log("Collection:" + JSON.stringify(collection));
+      axios({
+        method: "post",
         url: url,
         data: collection
       })
-      .then(response => {
-        let token = response.data.token;
-        console.log("token:" +response.data.token);
-        saveToken(token);
-        this.props.navigation.navigate('App');
-      })
-      .catch(error => {
-        console.log(error)
-      })
+        .then(response => {
+          let token = response.data.token;
+          console.log("token:" + response.data.token);
+          saveToken(token);
+          this.props.navigation.navigate("Login");
+        })
+        .catch(error => {
+          console.log(error);
+         
+        });
     } else if (collection.password != this.state.confirmationPassword) {
       Alert.alert("Passwords do not match");
-    } else {
+    }else {
       Alert.alert("Please enter in a valid UNCC email address");
     }
   };
