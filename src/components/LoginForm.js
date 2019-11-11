@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { KeyboardAvoidingView } from "react-native";
 
-import axios from "axios";
+import Axios from "axios";
 
 import {saveToken} from "./Storage";
 
@@ -35,7 +35,7 @@ export default class LoginForm extends Component {
       password: this.state.password
     };
     console.log('Collection:' + JSON.stringify(collection));
-    axios({
+    Axios({
       method: 'post',
       url: url,
       data: collection
