@@ -165,8 +165,7 @@ const styles = StyleSheet.create({
   },
   username: {
     color: "#fff",
-    underlineColorAndroid= "#fff",
-    fontSize=14
+ 
   },
   messages: {
     color: "#fff"
