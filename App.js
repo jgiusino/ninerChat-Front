@@ -16,7 +16,6 @@ import AuthLoading from "./src/Screens/AuthLoading";
 import { createDrawerNavigator } from "react-navigation-drawer";
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
-import SignOut from "./src/components/Signout";
 
 // URL variable
 global.URL = "http://10.0.2.2:5000";
@@ -54,9 +53,6 @@ const AppDrawer = createDrawerNavigator(
   {
     Home: {
       screen: Home
-    },
-    logout: {
-      screen: SignOut
     },
     Chat: {
       screen: Chat,

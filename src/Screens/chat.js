@@ -21,52 +21,52 @@ export default class Chat extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      messages:'',
-      token:'',
+      messages: "",
+      token: "",
       room: null,
-      text:''
+      text: ""
     };
   }
 
   _fetchToken = async () => {
     let t = await getToken();
-    this.setState({token: t});
-    console.log('Chat Token:'+ this.state.token);
+    this.setState({ token: t });
+    console.log("Chat Token:" + this.state.token);
   };
 
   _fetchRoom = async () => {
     let roomObject = await getRoom();
-    this.setState({room: JSON.parse(roomObject)});
+    this.setState({ room: JSON.parse(roomObject) });
     console.log(JSON.stringify(this.state.room));
-    
+
     // get room messages
-    let url = global.URL + "/api/room/"+this.state.room.id+"/messages";
+    let url = global.URL + "/api/room/" + this.state.room.id + "/messages";
     let collecton = {
       token: this.state.token
     };
     Axios({
-      method: 'post',
+      method: "post",
       url: url,
       data: collecton
     })
-    .then(response => {
-      let r = response.data;
-      this.setState({messages: r.messages});
-      console.log(JSON.stringify(r.messages));
-    })
-    .catch(error => {
-      console.log(error)
-    });
+      .then(response => {
+        let r = response.data;
+        this.setState({ messages: r.messages });
+        console.log(JSON.stringify(r.messages));
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   componentDidMount() {
     // listens to see if focus changed, fetch data, and rerender page
-    this._navLister = this.props.navigation.addListener('didFocus', () =>{
+    this._navLister = this.props.navigation.addListener("didFocus", () => {
       this._fetchData();
-      });
-  };
+    });
+  }
 
-  _fetchData () {
+  _fetchData() {
     // fetchs token and room data
     this._fetchToken().then(() => {
       this._fetchRoom();
@@ -74,26 +74,26 @@ export default class Chat extends Component {
   }
 
   _onPress() {
-    let url = global.URL + "/api/room/"+this.state.room.id;
+    let url = global.URL + "/api/room/" + this.state.room.id;
     let collection = {
-      token:this.state.token,
-      text:this.state.text
+      token: this.state.token,
+      text: this.state.text
     };
-    console.log('Collection:' + JSON.stringify(collection));
+    console.log("Collection:" + JSON.stringify(collection));
     Axios({
-      method: 'post',
+      method: "post",
       url: url,
       data: collection
     })
-    .then(response => {
-      console.log('PostMessage:'+response.data);
-    })
-    .catch(error => {
-      console.log(error)
-    });
+      .then(response => {
+        console.log("PostMessage:" + response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
     this._fetchData();
   }
-  
+
   //handles state change key val pair
   handleChange = key => val => {
     this.setState({ [key]: val });
@@ -106,54 +106,56 @@ export default class Chat extends Component {
           <FlatList
             style={styles.list}
             data={this.state.messages}
-            renderItem={({item}) => <Item 
-              name={item.name}  
-              text={item.text}
-              time={item.time}
-              type={item.type} 
-            />}
-            keyExtractor={item => 'id'+item.id}
+            renderItem={({ item }) => (
+              <Item
+                name={item.name}
+                text={item.text}
+                time={item.time}
+                type={item.type}
+              />
+            )}
+            keyExtractor={item => "id" + item.id}
           />
           <View style={styles.footer}>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.inputs}
-          placeholder="Write a message..."
-          underlineColorAndroid="transparent"
-          keyboardType="default"
-          value={this.state.text}
-          onChangeText={this.handleChange("text")}
-        />
-      </View>
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.inputs}
+                placeholder="Write a message..."
+                underlineColorAndroid="transparent"
+                keyboardType="default"
+                value={this.state.text}
+                onChangeText={this.handleChange("text")}
+              />
+            </View>
 
-      <TouchableOpacity 
-        style={styles.btnSend}
-        onPress={() => {
-          this._onPress();
-        }}
-      >
-        <Image
-          source={{
-            uri: "https://png.icons8.com/small/75/ffffff/filled-sent.png"
-          }}
-          style={styles.iconSend}
-        />
-      </TouchableOpacity>
-    </View>
+            <TouchableOpacity
+              style={styles.btnSend}
+              onPress={() => {
+                this._onPress();
+              }}
+            >
+              <Image
+                source={{
+                  uri: "https://png.icons8.com/small/75/ffffff/filled-sent.png"
+                }}
+                style={styles.iconSend}
+              />
+            </TouchableOpacity>
+          </View>
         </View>
       </KeyboardAvoidingView>
     );
   }
 }
 
-function Item({ text,name,time,type }) {
-  let itemStyle = (type === 'in' ? styles.itemIn : styles.itemOut);
+function Item({ text, name, time, type }) {
+  let itemStyle = type === "in" ? styles.itemIn : styles.itemOut;
   return (
-    <View style={[styles.item,itemStyle]}>
-      <View style={styles.userName}>{name}</View>
+    <View style={[styles.item]}>
       <View style={styles.balloon}>
+        <Text style={styles.username}>{name}</Text>
         <Text style={styles.messages}>{text}</Text>
-        </View>
+      </View>
     </View>
   );
 }
@@ -165,10 +167,15 @@ const styles = StyleSheet.create({
   },
   username: {
     color: "#fff",
+    fontWeight: 'bold',
+    fontSize: 18,
+    paddingBottom: 2,
+    textDecorationLine: 'underline'
  
   },
   messages: {
-    color: "#fff"
+    color: "#fff",
+    fontSize: 15
   },
   list: {
     paddingHorizontal: 17
@@ -200,10 +207,8 @@ const styles = StyleSheet.create({
     alignSelf: "center"
   },
   inputContainer: {
-    borderBottomColor: "#424647",
     backgroundColor: "#424647",
     borderRadius: 30,
-    borderBottomWidth: 1,
     height: 40,
     flexDirection: "row",
     alignItems: "center",
