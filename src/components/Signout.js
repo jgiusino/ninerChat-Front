@@ -18,8 +18,7 @@ export default class SignOut extends Component {
     };
 
     removeToken() {
-        let token = getToken();
-        token.deleteToken();
+        deleteToken();
         //print token to the console screen
         console.log("Token:" + token);
         if (token == 'none') {

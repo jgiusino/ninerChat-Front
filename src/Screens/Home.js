@@ -13,7 +13,7 @@ import {
 import Hamburger from "../components/Hamburger";
 import { getToken, setRoom } from "../components/Storage";
 
-import axios from "axios";
+import Axios from "axios";
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -49,7 +49,7 @@ export default class Home extends React.Component {
       token: this.state.token
     };
     console.log(JSON.stringify(collecton));
-    axios({
+    Axios({
       method: "post",
       url: url,
       data: collecton
