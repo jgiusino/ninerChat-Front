@@ -5,23 +5,39 @@ import {
   Image,
   Text,
   Platform,
-  Dimensions
+  Dimensions,
+  
 } from "react-native";
 import Login from "./src/Screens/login";
 import Chat from "./src/Screens/chat";
 import Home from "./src/Screens/Home";
 import SignUp from "./src/Screens/SignUp";
 import AuthLoading from "./src/Screens/AuthLoading";
-
+import Settings from "./src/Screens/Settings"
 import { createDrawerNavigator } from "react-navigation-drawer";
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
+import SafeAreaView from 'react-native-safe-area-view';
+import { DrawerItems } from 'react-navigation-drawer';
+import { ScrollView } from "react-native-gesture-handler";
 
 // URL variable
 global.URL = "http://10.0.2.2:5000";
 
 // Get screen dimensions to adjust width
 const WIDTH = Dimensions.get("window").width;
+//header for drawer
+const Customdrawercomponent = (props) => (
+  <SafeAreaView style={{ flex: 1}}>
+    <View style={{height: 150,backgroundColor: '#565656', alignItems: "center",justifyContent:'center'}}>
+     <Image source={require('./src/images/49er_logo.png')} style={{height: 120,width: 120, borderRadius:60}} />
+    </View>
+    <ScrollView>
+      <DrawerItems {...props} />
+    </ScrollView>
+  </SafeAreaView>
+)
+
 
 const AuthStack = createStackNavigator(
   // Routes
@@ -56,16 +72,20 @@ const AppDrawer = createDrawerNavigator(
     },
     Chat: {
       screen: Chat,
+    },
+    Settings: {
+      screen: Settings,
     }
   },
   // Config
   {
-    drawerWidth: WIDTH * 0.7,
-    drawerBackgroundColor: "#565656",
+    drawerBackgroundColor: '#595959',
     contentOptions: {
-      inactiveTintColor: "#ffff"
-    }
-  }
+      inactiveTintColor: '#ffff'
+    },
+    contentComponent: Customdrawercomponent
+  },
+  
 );
 
 const AppSwitch = createSwitchNavigator(
@@ -95,6 +115,7 @@ MainTabs -> [Home, Chat]
 const AppContainer = createAppContainer(AppSwitch);
 
 export default class App extends React.Component {
+  
   render() {
     return <AppContainer />;
   }
