@@ -150,13 +150,18 @@ export default class Chat extends Component {
 
 function Item({ text, name, time, type }) {
   let itemStyle = type === "in" ? styles.itemIn : styles.itemOut;
+  let messageStyle = type === "in" ? styles.messagesIn : styles.messagesOut
+  let nameStyle = type === "in" ? styles.nameIn : styles.nameOut
   return (
-    <View style={[styles.item]}>
-      <View style={styles.balloon}>
-        <Text style={styles.username}>{name}</Text>
-        <Text style={styles.messages}>{text}</Text>
+    <View style={[styles.item,itemStyle]}>
+      <View>
+        {type == "in"}
+        <Text style ={[nameStyle]}>{name}</Text>
+        <Text style={[messageStyle]}>{text}</Text>
       </View>
+      {type == "out"}
     </View>
+    
   );
 }
 
@@ -165,20 +170,32 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#1A1A1B"
   },
-  username: {
+  nameIn: {
     color: "#fff",
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: 15,
     paddingBottom: 2,
     textDecorationLine: 'underline'
  
   },
-  messages: {
+  nameOut: {
+    display: "none"
+  },
+  messagesIn: {
     color: "#fff",
     fontSize: 15
   },
+  messagesOut: {
+    fontSize: 15
+  },
+  subtext:{
+    color: "#939393",
+    fontSize: 10,
+    textDecorationLine: 'none'
+  },
   list: {
     paddingHorizontal: 17
+
   },
   title: {
     color: "white",
@@ -225,28 +242,28 @@ const styles = StyleSheet.create({
   balloon: {
     maxWidth: 250,
     padding: 15,
-    borderRadius: 20
+    borderRadius: 20,
   },
   itemIn: {
     alignSelf: "flex-start",
-    color: "#fff"
+ 
+   
   },
   itemOut: {
-    alignSelf: "flex-start",
-    color: "#fff"
-  },
-  time: {
     alignSelf: "flex-end",
-    margin: 15,
-    fontSize: 12,
-    color: "#fff"
+    backgroundColor: '#59c2fe',
+    
+ 
   },
+
   item: {
     marginVertical: 14,
     flex: 1,
-    flexDirection: "row",
+    flexDirection: 'row',
     backgroundColor: "#353839",
-    borderRadius: 300,
-    padding: 5
+    width: 250,
+    maxHeight: 250,
+    padding: 15,
+    borderRadius: 15,
   }
 });

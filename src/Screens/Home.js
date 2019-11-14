@@ -85,6 +85,7 @@ export default class Home extends React.Component {
     ];
     return (
       <View style={styles.container}>
+       
         <Hamburger navigation={this.props.navigation} />
 
         <SectionList
