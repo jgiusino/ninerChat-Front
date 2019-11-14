@@ -153,6 +153,8 @@ function Item({ text, name, time, type }) {
   let messageStyle = type === "in" ? styles.messagesIn : styles.messagesOut
   let nameStyle = type === "in" ? styles.nameIn : styles.nameOut
   return (
+   
+    
     <View style={[styles.item,itemStyle]}>
       <View>
         {type == "in"}
@@ -161,7 +163,7 @@ function Item({ text, name, time, type }) {
       </View>
       {type == "out"}
     </View>
-    
+  
   );
 }
 
@@ -174,8 +176,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontWeight: 'bold',
     fontSize: 15,
-    paddingBottom: 2,
-    textDecorationLine: 'underline'
+    paddingBottom: 1,
  
   },
   nameOut: {
