@@ -4,5 +4,5 @@ import{
 }from 'react-native'
 
 export default class Settings extends React.Component{
-
+    
 }

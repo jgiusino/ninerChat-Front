@@ -11,6 +11,7 @@ import {
   FlatList,
   Button
 } from "react-native";
+import Moment from 'moment';
 
 import { KeyboardAvoidingView } from "react-native";
 import { getRoom, getToken } from "../components/Storage";
@@ -28,12 +29,15 @@ export default class Chat extends Component {
     };
   }
 
+  //fetches the bearer token for the user
   _fetchToken = async () => {
     let t = await getToken();
     this.setState({ token: t });
     console.log("Chat Token:" + this.state.token);
   };
-
+  /*
+    POST request updates state to display messages for this chat room
+   */
   _fetchRoom = async () => {
     let roomObject = await getRoom();
     this.setState({ room: JSON.parse(roomObject) });
@@ -73,6 +77,11 @@ export default class Chat extends Component {
     });
   }
 
+  /*
+  POST request to server when user hits send
+  See lines 136-139 
+*/
+
   _onPress() {
     let url = global.URL + "/api/room/" + this.state.room.id;
     let collection = {
@@ -106,6 +115,7 @@ export default class Chat extends Component {
           <FlatList
             style={styles.list}
             data={this.state.messages}
+            //where function Item is rendered
             renderItem={({ item }) => (
               <Item
                 name={item.name}
@@ -148,22 +158,32 @@ export default class Chat extends Component {
   }
 }
 
+/*
+  Function definition takes text, name, time and type parameters 
+  and returns their values. This is called inside the render method above.
+  
+  See lines 110 - 117 @chat.js
+*/
+
 function Item({ text, name, time, type }) {
   let itemStyle = type === "in" ? styles.itemIn : styles.itemOut;
-  let messageStyle = type === "in" ? styles.messagesIn : styles.messagesOut
-  let nameStyle = type === "in" ? styles.nameIn : styles.nameOut
+  let messageStyle = type === "in" ? styles.messagesIn : styles.messagesOut;
+  let nameStyle = type === "in" ? styles.nameIn : styles.nameOut;
+  let messageTime = type === "in" ? styles.subtext : styles.noSubtext;
   return (
-   
-    
-    <View style={[styles.item,itemStyle]}>
+    <View style={[styles.messageContainer]}>
+    {type == "in"}
+    <Text style={[nameStyle]}>{name}</Text>
+    <Text style={messageTime}>{Moment(time).format('DD MMM LT')}</Text>
+    <View style={[styles.item, itemStyle]}>
       <View>
-        {type == "in"}
-        <Text style ={[nameStyle]}>{name}</Text>
         <Text style={[messageStyle]}>{text}</Text>
       </View>
+    
+   
       {type == "out"}
     </View>
-  
+    </View>
   );
 }
 
@@ -172,32 +192,38 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#1A1A1B"
   },
+  //user name styling for incoming messages
   nameIn: {
     color: "#fff",
-    fontWeight: 'bold',
+    fontWeight: "bold",
     fontSize: 15,
-    paddingBottom: 1,
- 
+    paddingBottom: 1
   },
+  //hides username for current user
   nameOut: {
     display: "none"
   },
+  //color and font size for all incoming messages
   messagesIn: {
     color: "#fff",
     fontSize: 15
   },
+  noSubtext:{
+    display: "none"
+  },
+  //default black color and font size for all outgoing messages
   messagesOut: {
     fontSize: 15
   },
-  subtext:{
+  subtext: {
     color: "#939393",
     fontSize: 10,
-    textDecorationLine: 'none'
+    textDecorationLine: "none"
   },
   list: {
     paddingHorizontal: 17
-
   },
+  //size color and positioning for the header
   title: {
     color: "white",
     fontSize: 24,
@@ -243,28 +269,24 @@ const styles = StyleSheet.create({
   balloon: {
     maxWidth: 250,
     padding: 15,
-    borderRadius: 20,
+    borderRadius: 20
   },
   itemIn: {
-    alignSelf: "flex-start",
- 
-   
+    alignSelf: "flex-start"
   },
   itemOut: {
     alignSelf: "flex-end",
-    backgroundColor: '#59c2fe',
-    
- 
+    backgroundColor: "#59c2fe"
   },
 
   item: {
     marginVertical: 14,
     flex: 1,
-    flexDirection: 'row',
-    backgroundColor: "#353839",
+    flexDirection: "row",
+    backgroundColor: "#424647",
     width: 250,
     maxHeight: 250,
     padding: 15,
-    borderRadius: 15,
+    borderRadius: 15
   }
 });

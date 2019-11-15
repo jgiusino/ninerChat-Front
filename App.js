@@ -29,7 +29,7 @@ const WIDTH = Dimensions.get("window").width;
 //header for drawer
 const Customdrawercomponent = (props) => (
   <SafeAreaView style={{ flex: 1}}>
-    <View style={{height: 150,backgroundColor: '#565656', alignItems: "center",justifyContent:'center'}}>
+    <View style={{height: 150,backgroundColor: '#5d5d5d', alignItems: "center",justifyContent:'center'}}>
      <Image source={require('./src/images/49er_logo.png')} style={{height: 120,width: 120, borderRadius:60}} />
     </View>
     <ScrollView>
