@@ -27,7 +27,8 @@ export default class Chat extends Component {
       messages: "",
       token: "",
       room: null,
-      text: ""
+      text: "",
+      mID: "",
     };
   }
 
@@ -48,7 +49,7 @@ export default class Chat extends Component {
     // get room messages
     let url = global.URL + "/api/room/" + this.state.room.id + "/messages";
     let collection = {
-      token: this.state.token
+      token: this.state.token,
     };
     Axios({
       method: "post",
@@ -57,6 +58,7 @@ export default class Chat extends Component {
     })
       .then(response => {
         let r = response.data;
+        console.log(response.data)
         this.setState({ messages: r.messages });
         console.log(JSON.stringify(r.messages));
       })
@@ -85,7 +87,7 @@ export default class Chat extends Component {
 */
 
   _onPress() {
-    let url = global.URL + "/api/room/" + this.state.room.id;
+    let url = global.URL + "/api/room/" + this.state.room.id + "/messages";
     let collection = {
       token: this.state.token,
       text: this.state.text

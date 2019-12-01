@@ -118,16 +118,16 @@ export default class Home extends React.Component {
         />
         <SectionList
           sections={privateData}
-          keyExtractor={(item, index) => item + index}
-          renderItem={({ item }) => {
+          keyExtractor={(item2, index) => item2 + index}
+          renderItem={({ item2 }) => {
             return (
               <View style={styles.itemBox}>
                 <TouchableOpacity
                   onPress={() => {
-                    this._onPress(item);
+                    this._onPress(item2);
                   }}
                 >
-                  <Text style={styles.chat}>{item.name}</Text>
+                  <Text style={styles.chat}>{item2.name}</Text>
                 </TouchableOpacity>
               </View>
             );
