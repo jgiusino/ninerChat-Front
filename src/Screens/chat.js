@@ -58,7 +58,7 @@ export default class Chat extends Component {
     })
       .then(response => {
         let r = response.data;
-        console.log(response.data)
+        console.log(response.data);
         this.setState({ messages: r.messages });
         console.log(JSON.stringify(r.messages));
       })
@@ -87,7 +87,7 @@ export default class Chat extends Component {
 */
 
   _onPress() {
-    let url = global.URL + "/api/room/" + this.state.room.id + "/messages";
+    let url = global.URL + "/api/room/" + this.state.room.id;
     let collection = {
       token: this.state.token,
       text: this.state.text
