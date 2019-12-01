@@ -17,6 +17,8 @@ import { KeyboardAvoidingView } from "react-native";
 import { getRoom, getToken } from "../components/Storage";
 
 import Axios from "axios";
+import { Header } from "react-navigation-stack";
+import Hamburger from '../components/Hamburger';
 
 export default class Chat extends Component {
   constructor(props) {
@@ -45,13 +47,13 @@ export default class Chat extends Component {
 
     // get room messages
     let url = global.URL + "/api/room/" + this.state.room.id + "/messages";
-    let collecton = {
+    let collection = {
       token: this.state.token
     };
     Axios({
       method: "post",
       url: url,
-      data: collecton
+      data: collection
     })
       .then(response => {
         let r = response.data;
@@ -101,6 +103,8 @@ export default class Chat extends Component {
         console.log(error);
       });
     this._fetchData();
+
+    this.state.text = "";
   }
 
   //handles state change key val pair
@@ -111,6 +115,7 @@ export default class Chat extends Component {
   render() {
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
+    
         <View style={styles.container}>
           <FlatList
             style={styles.list}
@@ -153,7 +158,9 @@ export default class Chat extends Component {
             </TouchableOpacity>
           </View>
         </View>
+       
       </KeyboardAvoidingView>
+    
     );
   }
 }

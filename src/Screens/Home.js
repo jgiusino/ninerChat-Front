@@ -20,10 +20,11 @@ export default class Home extends React.Component {
     super(props);
     this.state = {
       token: "",
-      rooms: []
+      privateRoom: [],
+      publicRoom: []
     };
   }
-  
+
   _onPress = room => {
     console.log("id:" + room.id);
     console.log("name:" + room.name);
@@ -45,19 +46,21 @@ export default class Home extends React.Component {
 
   _fetchRooms = () => {
     let url = global.URL + "/api/room";
-    let collecton = {
+    let collection = {
       token: this.state.token
     };
-    console.log(JSON.stringify(collecton));
+    console.log(JSON.stringify(collection));
     Axios({
       method: "post",
       url: url,
-      data: collecton
+      data: collection
     })
       .then(response => {
         let r = response.data;
-        this.setState({ rooms: r.rooms });
-        console.log("rooms:" + JSON.stringify(this.state.rooms));
+        console.log(r.private_rooms);
+        console.log(r.public_rooms);
+        this.setState({ privateRoom: r.private_rooms });
+        this.setState({ publicRoom: r.public_rooms });
       })
       .catch(error => {
         console.log(error);
@@ -73,14 +76,20 @@ export default class Home extends React.Component {
   }
 
   componentWillReceiveProps() {
-    console.log("rerender...");
+    console.log("re-render...");
   }
 
   render() {
-    let data = [
+    let publicData = [
       {
-        title: "Rooms",
-        data: this.state.rooms
+        title: "Public Rooms",
+        data: this.state.publicRoom
+      }
+    ];
+    let privateData = [
+      {
+        title: "Private Rooms",
+        data: this.state.privateRoom
       }
     ];
     return (
@@ -88,7 +97,27 @@ export default class Home extends React.Component {
         <Hamburger navigation={this.props.navigation} />
 
         <SectionList
-          sections={data}
+          sections={publicData}
+          keyExtractor={(item, index) => item + index}
+          renderItem={({ item }) => {
+            return (
+              <View style={styles.itemBox}>
+                <TouchableOpacity
+                  onPress={() => {
+                    this._onPress(item);
+                  }}
+                >
+                  <Text style={styles.chat}>{item.name}</Text>
+                </TouchableOpacity>
+              </View>
+            );
+          }}
+          renderSectionHeader={({ section: { title } }) => (
+            <Text style={styles.title}>{title}</Text>
+          )}
+        />
+        <SectionList
+          sections={privateData}
           keyExtractor={(item, index) => item + index}
           renderItem={({ item }) => {
             return (
@@ -121,14 +150,13 @@ const styles = StyleSheet.create({
   itemBox: {
     marginTop: 10,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   chat: {
-    //backgroundColor: "#00713d",
     backgroundColor: "#006940",
     color: "white",
     marginTop: "3%",
-    width: 200,
+    maxWidth: 200,
     textAlign: "center",
     fontSize: 18,
     borderRadius: 10,

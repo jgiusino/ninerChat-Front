@@ -22,6 +22,8 @@ export default class SignUpForm extends Component {
       email: "",
       password: "",
       confirmationPassword: "",
+      college: "",
+      major: "",
       err: false
     };
   }
@@ -36,7 +38,9 @@ export default class SignUpForm extends Component {
     let collection = {
       name: this.state.name,
       email: this.state.email,
-      password: this.state.password
+      password: this.state.password,
+      college: this.state.college,
+      major: this.state.major
     };
 
     if (
@@ -69,12 +73,28 @@ export default class SignUpForm extends Component {
       <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
         <View style={styles.container}>
           <TextInput //Email input box
-            placeholder="Name: "
+            placeholder="Username: This will be displayed to other users"
             placeholderTextColor="rgba(255,255,255,0.6)"
             returnKeyType="next"
             style={styles.input}
             value={this.state.name}
             onChangeText={this.handleChange("name")}
+          />
+          <TextInput //Major input box
+            placeholder="Enter Your Major: "
+            placeholderTextColor="rgba(255,255,255,0.6)"
+            returnKeyType="next"
+            style={styles.input}
+            value={this.state.major}
+            onChangeText={this.handleChange("major")}
+          />
+           <TextInput //college input box
+            placeholder="Enter College Affiliation: "
+            placeholderTextColor="rgba(255,255,255,0.6)"
+            returnKeyType="next"
+            style={styles.input}
+            value={this.state.college}
+            onChangeText={this.handleChange("college")}
           />
           <TextInput //Email input box
             placeholder="Enter An Email: "
