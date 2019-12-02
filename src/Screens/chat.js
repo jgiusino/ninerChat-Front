@@ -67,7 +67,7 @@ export default class Chat extends Component {
   };
 
   componentDidMount() {
-    // listens to see if focus changed, fetch data, and rerender page
+    // listens to see if focus changed, fetch data, and re-render page
     this._navLister = this.props.navigation.addListener("didFocus", () => {
       this._fetchData();
     });
