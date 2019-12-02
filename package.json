@@ -25,8 +25,9 @@
     "react-navigation-tabs": "^2.5.6",
     "react-router-native": "^5.1.2"
   },
-  "publishConfig": { "registry": "https://npm.pkg.github.com/" },
-
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "devDependencies": {
     "babel-preset-expo": "^7.1.0",
     "eslint-config-prettier": "^6.7.0"

@@ -9,9 +9,9 @@ export default class Login extends Component {
       <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
         <View style={styles.container}>
           <View style={styles.logoContainer}>
+        
+
             <Text style={styles.title}>Create Account</Text>
-            <Text style={styles.title}>Niner Chat</Text>
-            <Text style={styles.subTitle}>Connect | Learn | Grow</Text>
           </View>
           <View style={styles.formContainer}>
             <SignUpForm navigation={this.props.navigation} />
@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#1A1A1B"
   },
+
   logoContainer: {
     alignItems: "center",
     flexGrow: 1,

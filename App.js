@@ -20,7 +20,7 @@ import { createStackNavigator } from "react-navigation-stack";
 import SafeAreaView from 'react-native-safe-area-view';
 import { DrawerItems } from 'react-navigation-drawer';
 import { ScrollView } from "react-native-gesture-handler";
-import logout from "./src/components/logout"
+import Logout from "./src/components/logout";
 
 // URL variable
 global.URL = "http://10.0.2.2:5000";
@@ -71,14 +71,14 @@ const AppDrawer = createDrawerNavigator(
     Home: {
       screen: Home
     },
-    Chat: {
+    Recent_Chat: {
       screen: Chat,
     },
     Settings: {
       screen: Settings,
     },
     Logout: {
-      screen: logout
+      screen: Logout
     }
   },
   // Config

@@ -74,11 +74,11 @@ export default class Chat extends Component {
   }
 
   _fetchData() {
-    // fetchs token and room data
+    // fetches token and room data
     this._fetchToken().then(() => {
       this._fetchRoom();
     });
-    this.handleChange("");
+    
   }
 
   /*
@@ -104,7 +104,7 @@ export default class Chat extends Component {
       .catch(error => {
         console.log(error);
       });
-    this._fetchData();
+    this._fetchRoom();
   }
 
   //handles state change key val pair

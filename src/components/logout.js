@@ -2,10 +2,9 @@ import React, { Component } from "react";
 import {
     View,
     Text,
-    AsyncStorage
 } from 'react-native';
 
-import {getToken,deleteToken} from "../components/Storage";
+import {deleteToken} from "../components/Storage";
 
 export default class Logout extends Component {
     constructor(props) {

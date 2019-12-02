@@ -73,7 +73,7 @@ export default class SignUpForm extends Component {
       <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
         <View style={styles.container}>
           <TextInput //Email input box
-            placeholder="Username: This will be displayed to other users"
+            placeholder="Username: visible to all"
             placeholderTextColor="rgba(255,255,255,0.6)"
             returnKeyType="next"
             style={styles.input}

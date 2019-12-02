@@ -46,6 +46,7 @@ export default class LoginForm extends Component {
       this.props.navigation.navigate("Loading");
     }).catch(error => {
       console.log(error)
+    
     });
   }
 
