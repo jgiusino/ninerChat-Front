@@ -28,7 +28,6 @@ export default class Chat extends Component {
       token: "",
       room: null,
       text: "",
-      mID: "",
     };
   }
 
@@ -79,6 +78,7 @@ export default class Chat extends Component {
     this._fetchToken().then(() => {
       this._fetchRoom();
     });
+    this.handleChange("");
   }
 
   /*
@@ -105,8 +105,6 @@ export default class Chat extends Component {
         console.log(error);
       });
     this._fetchData();
-
-    this.state.text = "";
   }
 
   //handles state change key val pair
