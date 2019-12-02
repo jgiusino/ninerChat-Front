@@ -9,8 +9,6 @@ export default class Login extends Component {
       <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
         <View style={styles.container}>
           <View style={styles.logoContainer}>
-        
-
             <Text style={styles.title}>Create Account</Text>
           </View>
           <View style={styles.formContainer}>
