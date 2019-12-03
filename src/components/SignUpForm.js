@@ -6,25 +6,24 @@ import {
   TextInput,
   TouchableOpacity,
   Text,
-  Button
+  Button,
+  Picker
 } from "react-native";
 import axios from "axios";
 import { KeyboardAvoidingView } from "react-native";
 import { saveToken } from "./Storage";
 import { ThemeColors } from "react-navigation";
 
-
 export default class SignUpForm extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       name: "",
       email: "",
       password: "",
       confirmationPassword: "",
       college: "",
-      major: "",
-      err: false
+      major: ""
     };
   }
   //handles state change key val pair
@@ -80,15 +79,16 @@ export default class SignUpForm extends Component {
             value={this.state.name}
             onChangeText={this.handleChange("name")}
           />
-          <TextInput //Major input box
-            placeholder="Enter Your Major: "
+            <TextInput //college input box
+            placeholder="Enter Major "
             placeholderTextColor="rgba(255,255,255,0.6)"
             returnKeyType="next"
             style={styles.input}
             value={this.state.major}
             onChangeText={this.handleChange("major")}
           />
-           <TextInput //college input box
+          
+          <TextInput //college input box
             placeholder="Enter College Affiliation: "
             placeholderTextColor="rgba(255,255,255,0.6)"
             returnKeyType="next"

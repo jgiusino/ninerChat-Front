@@ -26,7 +26,7 @@ export default class Chat extends Component {
     this.state = {
       messages: "",
       token: "",
-      room: null,
+      room: "",
       text: "",
     };
   }
@@ -104,7 +104,7 @@ export default class Chat extends Component {
       .catch(error => {
         console.log(error);
       });
-    this._fetchRoom();
+    this._fetchData();
   }
 
   //handles state change key val pair

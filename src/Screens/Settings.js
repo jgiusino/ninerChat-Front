@@ -14,7 +14,7 @@ import {
   SafeAreaView
 } from "react-native";
 import Hamburger from "../components/Hamburger";
-import { TextInput } from "react-native-gesture-handler";
+import { TextInput, FlatList } from "react-native-gesture-handler";
 
 export default class Settings extends React.Component {
   constructor(props) {
@@ -66,6 +66,9 @@ export default class Settings extends React.Component {
       });
     });
   }
+  submit = ev => {
+    
+  };
 
   render() {
     let DATA = [
@@ -91,13 +94,23 @@ export default class Settings extends React.Component {
         <Hamburger navigation={this.props.navigation} />
 
         <SectionList
+          style={styles.list}
           sections={DATA}
           keyExtractor={(item, index) => item + index}
-          renderItem={({ item }) => <Item title={item} />}
+          renderItem={({ item }) => <Item title={item} />
+          }
           renderSectionHeader={({ section: { title } }) => (
             <Text style={styles.header}>{title}</Text>
           )}
         />
+       
+        <TouchableOpacity
+          onPress={() => this.submit()}
+          style={styles.buttonSignup}
+        >
+          <Text style={styles.buttonText}>Update Profile</Text>
+        </TouchableOpacity>
+     
       </View>
     );
   }
@@ -114,13 +127,34 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#1A1A1B",
-    paddingTop: 50,
-    alignItems: 'center'
+    padding: 50
+  },
+  list: {
+    paddingHorizontal: 17
   },
   itemBox: {
     marginTop: 10,
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "center"
+  },
+  
+  buttonSignup: {
+    height: 40,
+    textAlign: "center",
+    justifyContent: "center",
+    backgroundColor: "#006940",
+    color: "#fff",
+    position: 'absolute',
+    bottom: 1,
+    right: 0,
+    left: 0,
+    borderColor: "#006940",
+    paddingHorizontal: 10,
+  },
+  buttonText: {
+    color: "#fff",
+    fontWeight: "700",
+    textAlign: 'center'
   },
 
   item: {
@@ -143,7 +177,7 @@ const styles = StyleSheet.create({
     marginLeft: "4%"
   },
   title: {
-   color: "white",
+    color: "white",
     fontSize: 24,
     marginTop: "15%",
     marginLeft: "25%"
