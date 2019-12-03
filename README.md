@@ -69,5 +69,5 @@ See the official [React Native website](https://facebook.github.io/react-native/
 
 ## Authors
 
-- **Joseph Blackledge** - 
-- **Jonathan Giusino** -
+- **Joseph Blackledge** 
+- **Jonathan Giusino** 
