@@ -2,37 +2,14 @@
 
 A chat application for mobile and web devices that will connect UNCC students together -- enabling them to share, collect and learn important information regarding their courses.
 
-## Getting Started
-
-This assumes you have node package manager installed
-
-```
-clone repository
-```
-
-```
-navigate into project directory
-```
-
-```
-npm install
-npm start
-or:
-```
-
-```
-"start": "react-native start",
-"android": "react-native run-android",
-"ios": "react-native run-ios",
-"web": "expo start --web"
-```
-
+## NOTE:
+The server is not currently hosted this application will not work without it.
+- [Node Package Manager](https://nodejs.org/en/)
 ### Prerequisites
 
 What things you need to install the software and how to install them
 
 - [Node Package Manager](https://nodejs.org/en/)
-
 ## Dependencies:
 
     "axios": "^0.19.0",
@@ -51,6 +28,28 @@ What things you need to install the software and how to install them
     "react-navigation-stack": "^1.10.3",
     "react-navigation-tabs": "^2.5.6",
     "react-router-native": "^5.1.2"
+## Getting Started
+
+This assumes you have node package manager installed
+
+```
+clone repository
+```
+
+```
+navigate into project directory
+```
+
+```
+npm install
+```
+
+```
+"start": "react-native start",
+"android": "react-native run-android",
+"ios": "react-native run-ios",
+"web": "expo start --web"
+```
 
 ## Built With
 
