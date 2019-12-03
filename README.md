@@ -4,7 +4,7 @@ A chat application for mobile and web devices that will connect UNCC students to
 
 ## NOTE:
 The server is not currently hosted this application will not work without it.
-- [Node Package Manager](https://nodejs.org/en/)
+- [Backend](https://github.com/BlueDiablos/NinerChat.git)
 ### Prerequisites
 
 What things you need to install the software and how to install them
