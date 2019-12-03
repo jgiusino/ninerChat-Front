@@ -16,6 +16,8 @@ navigate into project directory
 
 ```
 npm install
+npm start
+or:
 ```
 
 ```
