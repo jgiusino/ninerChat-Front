@@ -21,8 +21,8 @@ import { Header } from "react-navigation-stack";
 import Hamburger from "../components/Hamburger";
 
 export default class Chat extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       messages: "",
       token: "",
