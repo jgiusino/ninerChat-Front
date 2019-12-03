@@ -71,7 +71,7 @@ const AppDrawer = createDrawerNavigator(
     Home: {
       screen: Home
     },
-    Recent_Chat: {
+    Chat: {
       screen: Chat,
     },
     Settings: {
