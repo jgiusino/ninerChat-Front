@@ -11,14 +11,14 @@ import {
   FlatList,
   Button
 } from "react-native";
-import Moment from 'moment';
+import Moment from "moment";
 
 import { KeyboardAvoidingView } from "react-native";
 import { getRoom, getToken } from "../components/Storage";
 
 import Axios from "axios";
 import { Header } from "react-navigation-stack";
-import Hamburger from '../components/Hamburger';
+import Hamburger from "../components/Hamburger";
 
 export default class Chat extends Component {
   constructor(props) {
@@ -27,7 +27,7 @@ export default class Chat extends Component {
       messages: "",
       token: "",
       room: "",
-      text: "",
+      text: ""
     };
   }
 
@@ -48,7 +48,7 @@ export default class Chat extends Component {
     // get room messages
     let url = global.URL + "/api/room/" + this.state.room.id + "/messages";
     let collection = {
-      token: this.state.token,
+      token: this.state.token
     };
     Axios({
       method: "post",
@@ -78,7 +78,6 @@ export default class Chat extends Component {
     this._fetchToken().then(() => {
       this._fetchRoom();
     });
-    
   }
 
   /*
@@ -115,8 +114,8 @@ export default class Chat extends Component {
   render() {
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
-    
         <View style={styles.container}>
+          <Text style={styles.header}>{this.state.room.name} Chat Room</Text>
           <FlatList
             style={styles.list}
             data={this.state.messages}
@@ -158,9 +157,7 @@ export default class Chat extends Component {
             </TouchableOpacity>
           </View>
         </View>
-       
       </KeyboardAvoidingView>
-    
     );
   }
 }
@@ -179,17 +176,16 @@ function Item({ text, name, time, type }) {
   let messageTime = type === "in" ? styles.subtext : styles.noSubtext;
   return (
     <View style={[styles.messageContainer]}>
-    {type == "in"}
-    <Text style={[nameStyle]}>{name}</Text>
-    <Text style={messageTime}>{Moment(time).format('DD MMM LT')}</Text>
-    <View style={[styles.item, itemStyle]}>
-      <View>
-        <Text style={[messageStyle]}>{text}</Text>
+      {type == "in"}
+      <Text style={[nameStyle]}>{name}</Text>
+      <Text style={messageTime}>{Moment(time).format("DD MMM LT")}</Text>
+      <View style={[styles.item, itemStyle]}>
+        <View>
+          <Text style={[messageStyle]}>{text}</Text>
+        </View>
+
+        {type == "out"}
       </View>
-    
-   
-      {type == "out"}
-    </View>
     </View>
   );
 }
@@ -206,6 +202,13 @@ const styles = StyleSheet.create({
     fontSize: 15,
     paddingBottom: 1
   },
+  header: {
+    padding: 20,
+    textAlign: "center",
+    backgroundColor: "#006940",
+    color: "#ffff",
+    fontSize: 30
+  },
   //hides username for current user
   nameOut: {
     display: "none"
@@ -215,7 +218,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 15
   },
-  noSubtext:{
+  noSubtext: {
     display: "none"
   },
   //default black color and font size for all outgoing messages
