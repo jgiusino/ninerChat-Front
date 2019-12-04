@@ -18,7 +18,7 @@ import { TextInput, FlatList } from "react-native-gesture-handler";
 import { KeyboardAvoidingView } from "react-native";
 
 export default class Update extends React.Component {
-  _isMounted = false;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -28,7 +28,6 @@ export default class Update extends React.Component {
       college: "",
       major: "",
       admin: "",
-      isLoading: true
     };
   }
   //handles state change key val pair
@@ -71,17 +70,13 @@ export default class Update extends React.Component {
     this._navLister = this.props.navigation.addListener("didFocus", () => {
       this._fetchToken().then(() => {
         this._fetchProfile();
-        if (this._isMounted) {
-          this.setState({ isLoading: false });
-        }
+
       });
     });
   }
-  componentWillUnmount() {
-    this._isMounted = false;
-  }
+  
   save = ev => {
-    let url = global.URL + "/api/profile";
+    let url = global.URL + "/api/profile/update";
     let update = {
       token: this.state.token,
       name: this.state.username,

@@ -16,14 +16,14 @@ import { getToken, setRoom } from "../components/Storage";
 import Axios from "axios";
 
 export default class Home extends React.Component {
-  _isMounted = false;
+  
   constructor(props) {
     super(props);
     this.state = {
       token: "",
       privateRoom: [],
       publicRoom: [],
-      isLoading: true
+      
     };
   }
 
@@ -63,7 +63,7 @@ export default class Home extends React.Component {
         console.log(r.public_rooms);
         this.setState({ privateRoom: r.private_rooms });
         this.setState({ publicRoom: r.public_rooms });
-        this._isMounted = true;
+        
       })
       .catch(error => {
         console.log(error);
@@ -71,20 +71,15 @@ export default class Home extends React.Component {
   };
 
   componentDidMount() {
-    
+
     this._navLister = this.props.navigation.addListener("didFocus", () => {
-        this._fetchToken().then(() => {
-          this._fetchRooms();
-          if (this._isMounted) {
-            this.setState({isLoading: false});
-          }
-        });
-      
+      this._fetchToken().then(() => {
+        this._fetchRooms();
+      });
+
     });
   }
-  componentWillUnmount() {
-    this._isMounted = false;
-  }
+
 
   render() {
     let publicData = [
