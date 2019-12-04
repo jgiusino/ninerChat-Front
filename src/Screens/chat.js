@@ -17,12 +17,10 @@ import { KeyboardAvoidingView } from "react-native";
 import { getRoom, getToken } from "../components/Storage";
 
 import Axios from "axios";
-import { Header } from "react-navigation-stack";
-import Hamburger from "../components/Hamburger";
 
 export default class Chat extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       messages: "",
       token: "",
@@ -67,10 +65,12 @@ export default class Chat extends Component {
   };
 
   componentDidMount() {
-    // listens to see if focus changed, fetch data, and re-render page
-    this._navLister = this.props.navigation.addListener("didFocus", () => {
-      this._fetchData();
-    });
+  
+      // listens to see if focus changed, fetch data, and re-render page
+      this._navLister = this.props.navigation.addListener("didFocus", () => {
+        this._fetchData();
+      });
+ 
   }
 
   _fetchData() {

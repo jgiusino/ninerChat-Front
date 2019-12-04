@@ -15,8 +15,9 @@ import {
 } from "react-native";
 import Hamburger from "../components/Hamburger";
 import { TextInput, FlatList } from "react-native-gesture-handler";
+import { KeyboardAvoidingView } from "react-native";
 
-export default class Settings extends React.Component {
+export default class Update extends React.Component {
   _isMounted = false;
   constructor(props) {
     super(props);
@@ -30,6 +31,10 @@ export default class Settings extends React.Component {
       isLoading: true
     };
   }
+  //handles state change key val pair
+  handleChange = key => val => {
+    this.setState({ [key]: val });
+  };
 
   _fetchToken = async () => {
     let t = await getToken();
@@ -55,7 +60,6 @@ export default class Settings extends React.Component {
         this.setState({ admin: r.admin });
         this.setState({ major: r.major });
         this.setState({ college: r.college });
-        this._isMounted = true;
       })
       .catch(error => {
         console.log(error);
@@ -63,73 +67,58 @@ export default class Settings extends React.Component {
   };
 
   componentDidMount() {
-    
+  
     this._navLister = this.props.navigation.addListener("didFocus", () => {
-        this._fetchToken().then(() => {
-          this._fetchProfile();
-          if (this._isMounted) {
-            this.setState({isLoading: false});
-          }
-        });
-      
+      this._fetchToken().then(() => {
+        this._fetchProfile();
+        if (this._isMounted) {
+          this.setState({ isLoading: false });
+        }
+      });
     });
   }
-  componentWillUnmount(){
+  componentWillUnmount() {
     this._isMounted = false;
   }
-  submit = ev => {
-    this.props.navigation.navigate("Update");
+  save = ev => {
+    let url = global.URL + "/api/profile";
+    let update = {
+      token: this.state.token,
+      name: this.state.username,
+      college: this.state.college,
+      major: this.state.major
+    };
+    console.log("Info to be updated:" + JSON.stringify(update));
+    Axios({
+      method: "post",
+      url: url,
+      data: update
+    })
+      .then(response => {
+        this.props.navigation.navigate("Settings");
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
-
   render() {
-    let DATA = [
-      {
-        title: "Username",
-        data: [this.state.username]
-      },
-      {
-        title: "Email",
-        data: [this.state.email]
-      },
-      {
-        title: "Major",
-        data: [this.state.major]
-      },
-      {
-        title: "College",
-        data: [this.state.college]
-      }
-    ];
     return (
-      <View style={styles.container}>
-        <Hamburger navigation={this.props.navigation} />
-
-        <SectionList
-          style={styles.list}
-          sections={DATA}
-          keyExtractor={(item, index) => item + index}
-          renderItem={({ item }) => <Item title={item} />}
-          renderSectionHeader={({ section: { title } }) => (
-            <Text style={styles.header}>{title}</Text>
-          )}
-        />
-
-        <TouchableOpacity
-          onPress={() => this.submit()}
-          style={styles.buttonSignup}
-        >
-          <Text style={styles.buttonText}>Update Profile</Text>
-        </TouchableOpacity>
-      </View>
+      
+      <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
+        <View style={styles.container}>
+        <Text style={styles.title}>PREVIEW && NOT WORKING</Text>
+      
+        
+          <TouchableOpacity
+            onPress={() => this.save()}
+            style={styles.buttonSignup}
+          >
+            <Text style={styles.buttonText}>Save</Text>
+          </TouchableOpacity>
+        </View>
+      </KeyboardAvoidingView>
     );
   }
-}
-function Item({ title }) {
-  return (
-    <View style={styles.itemBox}>
-      <Text style={styles.item}>{title}</Text>
-    </View>
-  );
 }
 
 const styles = StyleSheet.create({
@@ -145,6 +134,16 @@ const styles = StyleSheet.create({
     marginTop: 10,
     justifyContent: "center",
     alignItems: "center"
+  },
+  input: {
+    height: 40,
+    backgroundColor: "rgba(255,255,255,0.2)",
+    marginBottom: 20,
+    color: "#fff",
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#fff"
   },
 
   buttonSignup: {

@@ -21,6 +21,7 @@ import SafeAreaView from 'react-native-safe-area-view';
 import { DrawerItems } from 'react-navigation-drawer';
 import { ScrollView } from "react-native-gesture-handler";
 import Logout from "./src/components/logout";
+import Update from "./src/Screens/Update";
 
 // URL variable
 global.URL = "http://10.0.2.2:5000";
@@ -60,7 +61,14 @@ const AuthStack = createStackNavigator(
       navigationOptions:{
         header: null
       }
+    },
+    Update: {
+      screen: Update,
+      navigationOptions: {
+        header: null // removes the header
+      }
     }
+
   }
   // Config
 );
