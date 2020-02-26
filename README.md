@@ -4,7 +4,7 @@ A chat application for mobile and web devices that will connect UNCC students to
 
 ## NOTE:
 The server is not currently hosted this application will not work without it.
-- [Backend](https://github.com/jgiusino/ninerChat-Front.git)
+- [Backend](https://github.com/jgiusino/NinerChat.git)
 ### Prerequisites
 
 What things you need to install the software and how to install them
